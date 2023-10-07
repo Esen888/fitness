@@ -17,7 +17,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       userUseCase
           .createUser(event.userModel)
           .then((_) => emit(CreatedUserState()))
-          .onError((error, stackTrace) => emit(ErrorState(error.toString())));
+          .onError((error, stackTrace) => emit(UserErrorState(error.toString())));
     });
   }
 }

@@ -41,20 +41,24 @@ class TrainingScreen extends StatelessWidget {
                         color: ColorHelper.defaultThemeColor,
                       ),
                     ),
-                    Text(
-                      "$exerciseName  ",
-                      style: TextHelper.w700s20.copyWith(
-                          color: ColorHelper.exerciseNameDefaultColor),
+                    Flexible(
+                      child: Text(
+                        "$exerciseName  ",
+                        style: TextHelper.w700s20.copyWith(
+                            color: ColorHelper.exerciseNameDefaultColor),
+                      ),
                     ),
                     Icon(
                       Icons.timer_outlined,
                       size: 12.r,
                       color: ColorHelper.defaultThemeColor,
                     ),
-                    Text(
-                      " Время: 0 сек",
-                      style: TextHelper.w500s12
-                          .copyWith(color: ColorHelper.defaultThemeColor),
+                    Flexible(
+                      child: Text(
+                        " Время: 0 сек",
+                        style: TextHelper.w500s12
+                            .copyWith(color: ColorHelper.defaultThemeColor),
+                      ),
                     )
                   ],
                 ),

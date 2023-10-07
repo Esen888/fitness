@@ -47,10 +47,12 @@ class LoginHelperCards extends StatelessWidget {
                 color: ColorHelper.black000000,
               ),
               SizedBox(width: 8.w),
-              Text(
-                "Войти через Google",
-                style:
-                    TextHelper.w500s10.copyWith(color: ColorHelper.black101010),
+              Flexible(
+                child: Text(
+                  "Войти через Google",
+                  style: TextHelper.w500s10
+                      .copyWith(color: ColorHelper.black101010),
+                ),
               )
             ],
           ),
@@ -77,10 +79,12 @@ class LoginHelperCards extends StatelessWidget {
                 size: 12.r,
               ),
               SizedBox(width: 8.w),
-              Text(
-                "Войти через Apple",
-                style:
-                    TextHelper.w500s10.copyWith(color: ColorHelper.black101010),
+              Flexible(
+                child: Text(
+                  "Войти через Apple",
+                  style: TextHelper.w500s10
+                      .copyWith(color: ColorHelper.black101010),
+                ),
               )
             ],
           ),

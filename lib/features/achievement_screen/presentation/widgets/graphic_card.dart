@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../internal/helpers/color_helper.dart';
 import '../../../../internal/helpers/text_helper.dart';
+import '../../../user/presentation/screens/sign_up_screen.dart';
 
 class GraphicCard extends StatelessWidget {
   final String error;
@@ -39,7 +40,10 @@ class GraphicCard extends StatelessWidget {
               ),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const SignUpScreen()));
+              },
               style: ElevatedButton.styleFrom(
                   fixedSize: Size(
                     152.w,

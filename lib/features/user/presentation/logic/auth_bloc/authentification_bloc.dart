@@ -99,20 +99,29 @@ class AuthentificationBloc
           .then((value) => emit(Authenticated()))
           .onError((error, stackTrace) => emit(UnAuthenticated()));
     });
+
     on<AppleSignInRequested>((event, emit) async {
       emit(AuthLoadingState());
-
       await authUseCase
           .signInWithApple()
           .then((value) => emit(Authenticated()))
           .onError((error, stackTrace) => emit(UnAuthenticated()));
     });
-    
+
+    on<DeleteCurrentAccaunt>((event, emit) async {
+      emit(AuthLoadingState());
+      await authUseCase
+          .deleteUserAccount()
+          .whenComplete(() => emit(UnAuthenticated()))
+          .onError((error, stackTrace) => AuthError(error: error.toString()));
+    });
 
     on<SignOutRequested>((event, emit) async {
       emit(AuthLoadingState());
-      await authUseCase.signOut();
-      emit(UnAuthenticated());
+      await authUseCase
+          .signOut()
+          .whenComplete(() => emit(UnAuthenticated()))
+          .onError((error, stackTrace) => AuthError(error: error.toString()));
     });
   }
 }

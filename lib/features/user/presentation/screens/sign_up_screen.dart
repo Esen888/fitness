@@ -1,5 +1,4 @@
 import 'package:BodyPower/bottom_navigation_bar.dart';
-import 'package:BodyPower/features/user/presentation/widgets/otp_widget.dart';
 import 'package:BodyPower/features/user/presentation/widgets/login_helper_cards.dart';
 import 'package:BodyPower/internal/helpers/color_helper.dart';
 import 'package:BodyPower/internal/helpers/text_helper.dart';
@@ -7,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../logic/auth_bloc/authentification_bloc.dart';
-import '../widgets/back_leading_card.dart';
-import '../widgets/phone_number_widget.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -18,13 +15,13 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  late TextEditingController phoneNumberController;
-  late TextEditingController codeController;
+  // late TextEditingController phoneNumberController;
+  // late TextEditingController codeController;
 
   @override
   void initState() {
-    phoneNumberController = TextEditingController();
-    codeController = TextEditingController();
+    // phoneNumberController = TextEditingController();
+    // codeController = TextEditingController();
     super.initState();
   }
 

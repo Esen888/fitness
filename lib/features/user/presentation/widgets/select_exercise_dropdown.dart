@@ -32,10 +32,12 @@ class SelectExerciseDropDown extends StatelessWidget {
             color: ColorHelper.green90E072,
           ),
           SizedBox(width: 6.w),
-          Text(
-            "Жим в рычажном тренажере",
-            style: TextHelper.w500s12
-                .copyWith(color: ColorHelper.defaultThemeColor),
+          Flexible(
+            child: Text(
+              "Жим в рычажном тренажере",
+              style: TextHelper.w500s12
+                  .copyWith(color: ColorHelper.defaultThemeColor),
+            ),
           ),
           const Spacer(),
           Icon(

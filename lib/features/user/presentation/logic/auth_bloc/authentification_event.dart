@@ -37,20 +37,19 @@ class OnPhoneOtpSent extends AuthentificationEvent {
 }
 
 class OnPhoneAuthErrorEvent extends AuthentificationEvent {
-   final String error;
-    OnPhoneAuthErrorEvent({required this.error});
+  final String error;
+  OnPhoneAuthErrorEvent({required this.error});
 
-   @override
-   List<Object> get props => [error];
+  @override
+  List<Object> get props => [error];
 }
 
 class OnPhoneAuthVerificationCompleteEvent extends AuthentificationEvent {
-   final AuthCredential credential;
-    OnPhoneAuthVerificationCompleteEvent({
-     required this.credential,
-   });
+  final AuthCredential credential;
+  OnPhoneAuthVerificationCompleteEvent({
+    required this.credential,
+  });
 }
-
 
 ///
 ///
@@ -74,3 +73,5 @@ class GoogleSignInRequested extends AuthentificationEvent {}
 class SignOutRequested extends AuthentificationEvent {}
 
 class AppleSignInRequested extends AuthentificationEvent {}
+
+class DeleteCurrentAccaunt extends AuthentificationEvent {}

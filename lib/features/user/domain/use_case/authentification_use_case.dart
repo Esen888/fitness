@@ -12,11 +12,11 @@ class AuthentificationUseCase {
     required Function(String) codeAutoRetrievalTimeout,
   }) async =>
       await authentificationRepositoryImpl.phoneAuthentication(
-        phoneNumber: phoneNumber,
-        verificationCompleted: verificationCompleted,
-        verificationFailed: verificationFailed,
-        codeSent: codeSent,
-        codeAutoRetrievalTimeout: codeAutoRetrievalTimeout);
+          phoneNumber: phoneNumber,
+          verificationCompleted: verificationCompleted,
+          verificationFailed: verificationFailed,
+          codeSent: codeSent,
+          codeAutoRetrievalTimeout: codeAutoRetrievalTimeout);
 
   Future<bool> verifyOTP({required String otp}) async =>
       await authentificationRepositoryImpl.verifyOTP(otp: otp);
@@ -36,6 +36,10 @@ class AuthentificationUseCase {
 
   Future<void> signInWithGoogle() async =>
       await authentificationRepositoryImpl.signInWithGoogle();
-    Future<void> signInWithApple() async =>
-      await authentificationRepositoryImpl.signInWithApple();  
+
+  Future<void> signInWithApple() async =>
+      await authentificationRepositoryImpl.signInWithApple();
+
+  Future<void> deleteUserAccount() async =>
+      await authentificationRepositoryImpl.deleteUserAccount();
 }

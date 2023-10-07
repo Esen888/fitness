@@ -21,8 +21,8 @@ class FetchedUserState extends UserState {
 
 class CreatedUserState extends UserState {}
 
-class ErrorState extends UserState {
+class UserErrorState extends UserState {
   final String error;
 
-  ErrorState(this.error);
+  UserErrorState(this.error);
 }

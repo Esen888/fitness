@@ -8,8 +8,6 @@ import 'package:intl/intl.dart';
 import '../../../../internal/helpers/text_helper.dart';
 import '../../../blogger/presentation/logic/bloc/blogger_bloc.dart';
 import '../widgets/my_course_card.dart';
-import '../widgets/training_schedule_card.dart';
-import '../widgets/trainings_isnot_added_card.dart';
 import '../widgets/week_schedule_tabbar.dart';
 
 class HomePageScreen extends StatefulWidget {
@@ -39,11 +37,11 @@ class _HomePageScreenState extends State<HomePageScreen> {
     return BlocConsumer<BloggerBloc, BloggerState>(
       listener: (context, state) {
         if (state is ErrorState) {
-         Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (context) => const ErrorScreen(),
-              ),
-            );
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const ErrorScreen(),
+            ),
+          );
         }
       },
       builder: (context, state) {
@@ -52,7 +50,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
             child: CircularProgressIndicator.adaptive(),
           );
         }
-        
+
         if (state is FetchedBloggersState) {
           return SafeArea(
             child: Padding(

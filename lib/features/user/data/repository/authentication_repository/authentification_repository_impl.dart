@@ -17,7 +17,6 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
           AppleIDAuthorizationScopes.fullName,
         ],
       );
-      
     } catch (e) {
       log("ERROR   GOOGLE SIGN IN ${e.toString()}");
       throw Exception(e.toString());
@@ -129,6 +128,18 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
     } catch (e) {
       log('Verification failed: ${e.toString()}');
       throw e;
+    }
+  }
+
+  @override
+  Future<void> deleteUserAccount() async {
+    try {
+      User user = FirebaseAuth.instance.currentUser!;
+      // if (user == null) {
+      await user.delete();
+      // } else {}
+    } catch (e) {
+      log(e.toString());
     }
   }
 

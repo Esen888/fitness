@@ -14,5 +14,6 @@ abstract class AuthentificationRepository {
   Future<void> signOut();
   Future<void> signInWithGoogle();
   Future<void> signInWithApple();
+   Future<void> deleteUserAccount();
   // Future<void> signInWithApple();
 }

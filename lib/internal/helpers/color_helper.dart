@@ -19,7 +19,7 @@ class ColorHelper {
       isDarkMode ? const Color(0xff2F2F2F) : const Color(0xffD9D9D9);
   static Color cardsBackground =
       isDarkMode ? const Color(0xff2F2F2F) : const Color(0xffE1E1E1);
-       static Color approachCardBack =
+  static Color approachCardBack =
       isDarkMode ? const Color(0xff3F3F3F) : const Color(0xff90E072);
   static Color selectExerciseDropDownBack =
       isDarkMode ? const Color(0xff2B2B2B) : const Color(0xffE1E1E1);
@@ -51,11 +51,11 @@ class ColorHelper {
   static Color unAthenticatedText = const Color(0xffBBFFA3);
   static Color countryCodeText = const Color(0xff606060);
   static Color newsTimeColor = const Color(0xff777777);
-   static Color phoneNumberColor = const Color(0xff777777);
+  static Color phoneNumberColor = const Color(0xff777777);
   static Color exercisesListColor = const Color(0xff707070);
   static Color recommendedTime = const Color(0xff707070);
   static Color inviteFriendColor = const Color(0xff707070);
   static Color generalIconColor = const Color(0xff55BA30);
-   static Color logOutIcon = const Color(0xffFF0000);
-   static Color healthAndSafetyIcon = const Color(0xff00B2FF);
+  static Color logOutIcon = const Color(0xffFF0000);
+  static Color healthAndSafetyIcon = const Color(0xff00B2FF);
 }
