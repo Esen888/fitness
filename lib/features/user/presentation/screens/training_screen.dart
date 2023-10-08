@@ -8,12 +8,28 @@ import '../widgets/select_exercise_dropdown.dart';
 import '../widgets/training_gift_card.dart';
 import '../widgets/weight_repeat_add_card.dart';
 
-class TrainingScreen extends StatelessWidget {
+class TrainingScreen extends StatefulWidget {
   final String exerciseName;
-  TrainingScreen({super.key, required this.exerciseName});
+  const TrainingScreen({super.key, required this.exerciseName});
 
-  final controllerLottie =
-      PageController(viewportFraction: 0.8, keepPage: false);
+  @override
+  State<TrainingScreen> createState() => _TrainingScreenState();
+}
+
+class _TrainingScreenState extends State<TrainingScreen> {
+  late PageController _controllerLottie;
+
+  @override
+  void initState() {
+    _controllerLottie = PageController(viewportFraction: 0.8, keepPage: false);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controllerLottie.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +56,10 @@ class TrainingScreen extends StatelessWidget {
                         size: 24.r,
                         color: ColorHelper.defaultThemeColor,
                       ),
-                    ),
+
                     Flexible(
                       child: Text(
-                        "$exerciseName  ",
+                         "${widget.exerciseName}  ",
                         style: TextHelper.w700s20.copyWith(
                             color: ColorHelper.exerciseNameDefaultColor),
                       ),

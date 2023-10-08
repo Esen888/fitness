@@ -1,88 +1,129 @@
-import 'package:BodyPower/features/blogger/data/models/model.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:BodyPower/features/user/presentation/logic/video_cubit/video_cubit.dart';
+import 'package:BodyPower/features/user/presentation/screens/video_screen.dart';
 import 'package:BodyPower/internal/helpers/color_helper.dart';
 import 'package:BodyPower/internal/helpers/text_helper.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../screens/training_screen.dart';
+class TrainingScheduleCard extends StatefulWidget {
+  const TrainingScheduleCard({
+    Key? key,
+    required this.dayOfTheWeek,
+  }) : super(key: key);
+  final String dayOfTheWeek;
 
-class TrainingScheduleCard extends StatelessWidget {
-  const TrainingScheduleCard({super.key});
+  @override
+  State<TrainingScheduleCard> createState() => _TrainingScheduleCardState();
+}
+
+class _TrainingScheduleCardState extends State<TrainingScheduleCard> {
+  var _borderRadiusTop = const Radius.circular(0);
+  var _borderRadiusBottom = const Radius.circular(0);
+  @override
+  void initState() {
+    BlocProvider.of<VideoCubit>(context)
+        .getVideos(dayOfTheWeek: widget.dayOfTheWeek);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Первая тренировка",
-              style:
-                  TextHelper.w500s12.copyWith(color: ColorHelper.green90E072),
-            ),
-            SizedBox(width: 10.w),
-            Text(
-              "1 час 35 мин",
-              style: TextHelper.w500s12
-                  .copyWith(color: ColorHelper.defaultThemeColor),
-            ),
-          ],
-        ),
-        Expanded(
-          child: ListView.builder(
-            padding: EdgeInsets.only(top: 8.h),
-            // physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              return InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => TrainingScreen(
-                                exerciseName: trainingNames[index],
-                              )));
-                },
-                child: Container(
-                  width: 343.w,
-                  height: 76.h,
-                  padding: EdgeInsets.only(top: 13.h),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.vertical(
-                      top: index == 0
-                          ? Radius.circular(14.r)
-                          : const Radius.circular(0),
-                      bottom: index == trainingImages.length - 1
-                          ? Radius.circular(14.r)
-                          : const Radius.circular(0),
-                    ),
-                    image: DecorationImage(
-                      image: AssetImage("${trainingImages[index]}"),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        trainingNames[index],
-                        style: TextHelper.w500s16
-                            .copyWith(color: ColorHelper.alwaysWhiteFFFFFF),
+        BlocConsumer<VideoCubit, VideoState>(
+          listener: (context, state) {
+            if (state is VideoFinishSuccessState) {
+              Future.delayed(const Duration(milliseconds: 500)).then((value) {
+                BlocProvider.of<VideoCubit>(context)
+                    .getVideos(dayOfTheWeek: widget.dayOfTheWeek);
+              });
+            }
+          },
+          builder: (context, state) {
+            if (state is VideoLoadingState) {
+              return const Center(
+                child: CircularProgressIndicator.adaptive(),
+              );
+            }
+            if (state is VideoErrorState) {
+              return Text(state.error.toString());
+            }
+            if (state is VideoSuccessState) {
+              return Expanded(
+                child: ListView.builder(
+                  itemCount: state.data.length,
+                  padding: EdgeInsets.only(top: 8.h),
+                  itemBuilder: (context, index) {
+                    _borderRadiusTop = Radius.circular(index == 0 ? 16 : 0);
+                    _borderRadiusBottom = Radius.circular(
+                      state.data.length >= 2
+                          ? index == state.data.length - 1
+                              ? 16
+                              : 0
+                          : 0,
+                    );
+                    return InkWell(
+                      borderRadius: BorderRadius.only(
+                          topLeft: _borderRadiusTop,
+                          topRight: _borderRadiusTop,
+                          bottomLeft: _borderRadiusBottom,
+                          bottomRight: _borderRadiusBottom),
+                      highlightColor: Colors.transparent,
+                      onTap: !(state.data[index].isAvailable ?? true)
+                          ? null
+                          : () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => VideoScreen(
+                                          model: state.data[index],
+                                          index: index,
+                                          dayOfTheWeek: widget.dayOfTheWeek,
+                                          mediaUrl:
+                                              state.data[index].mediaUrl)));
+                            },
+                      child: Ink(
+                        width: 343.w,
+                        height: 76.h,
+                        padding: EdgeInsets.only(top: 13.h),
+                        decoration: BoxDecoration(
+                          border: state.data[index].isWatched ?? false
+                              ? Border.all(color: ColorHelper.trainingTypeColor)
+                              : null,
+                          borderRadius: BorderRadius.only(
+                              topLeft: _borderRadiusTop,
+                              topRight: _borderRadiusTop,
+                              bottomLeft: _borderRadiusBottom,
+                              bottomRight: _borderRadiusBottom),
+                          image: DecorationImage(
+                            opacity: state.data[index].isAvailable ?? false
+                                ? 0.5
+                                : 0.3,
+                            image: NetworkImage(
+                                state.data[index].imageVideo ?? ''),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            state.data[index].isAvailable ?? false
+                                ? state.data[index].videoName ?? ''
+                                : 'Видео недоступно',
+                            style: TextHelper.w500s16.copyWith(
+                                color: state.data[index].isAvailable ?? false
+                                    ? ColorHelper.alwaysWhiteFFFFFF
+                                    : ColorHelper.grey878787),
+                          ),
+                        ),
                       ),
-                      Text(
-                        "$index упражнение",
-                        style: TextHelper.w500s10.copyWith(
-                            color:
-                                ColorHelper.alwaysWhiteFFFFFF.withOpacity(0.5)),
-                      ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
               );
-            },
-            itemCount: trainingImages.length,
-          ),
+            }
+            return const SizedBox();
+          },
         ),
       ],
     );

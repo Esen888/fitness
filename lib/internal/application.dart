@@ -4,7 +4,9 @@ import 'package:BodyPower/features/news_page/domain/use_case/news_use_case.dart'
 import 'package:BodyPower/features/news_page/presentation/logic/cubit/news_cubit.dart';
 import 'package:BodyPower/features/splash_screen/splash_screen.dart';
 import 'package:BodyPower/features/user/domain/use_case/user_use_case.dart';
+import 'package:BodyPower/features/user/domain/use_case/videos_usecase.dart';
 import 'package:BodyPower/features/user/presentation/logic/user_bloc/user_bloc.dart';
+import 'package:BodyPower/features/user/presentation/logic/video_cubit/video_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,18 +27,14 @@ class MyApp extends StatelessWidget {
             RepositoryProvider<BloggerUseCase>(
                 create: (context) => BloggerUseCase()),
             RepositoryProvider<UserUseCase>(create: (context) => UserUseCase()),
-            RepositoryProvider<AuthentificationUseCase>(
-                create: (context) => AuthentificationUseCase()),
+            
             RepositoryProvider<NewsUseCase>(create: (context) => NewsUseCase()),
+            RepositoryProvider<VideosUsecase>(
+              create: (context) => VideosUsecase(),
+            ),
           ],
           child: MultiBlocProvider(
             providers: [
-              BlocProvider(
-                create: (context) => AuthentificationBloc(
-                  authUseCase:
-                      RepositoryProvider.of<AuthentificationUseCase>(context),
-                ),
-              ),
               BlocProvider(
                 create: (context) => UserBloc(
                   userUseCase: RepositoryProvider.of<UserUseCase>(context),
@@ -52,6 +50,10 @@ class MyApp extends StatelessWidget {
                 create: (context) => NewsCubit(
                   newsUseCase: RepositoryProvider.of<NewsUseCase>(context),
                 ),
+              ),
+              BlocProvider(
+                create: (context) =>
+                    VideoCubit(RepositoryProvider.of<VideosUsecase>(context)),
               ),
             ],
             child: MaterialApp(
