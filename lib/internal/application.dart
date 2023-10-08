@@ -27,7 +27,8 @@ class MyApp extends StatelessWidget {
             RepositoryProvider<BloggerUseCase>(
                 create: (context) => BloggerUseCase()),
             RepositoryProvider<UserUseCase>(create: (context) => UserUseCase()),
-            
+            RepositoryProvider<AuthentificationUseCase>(
+                create: (context) => AuthentificationUseCase()),
             RepositoryProvider<NewsUseCase>(create: (context) => NewsUseCase()),
             RepositoryProvider<VideosUsecase>(
               create: (context) => VideosUsecase(),
@@ -35,6 +36,12 @@ class MyApp extends StatelessWidget {
           ],
           child: MultiBlocProvider(
             providers: [
+              BlocProvider(
+                create: (context) => AuthentificationBloc(
+                  authUseCase:
+                      RepositoryProvider.of<AuthentificationUseCase>(context),
+                ),
+              ),
               BlocProvider(
                 create: (context) => UserBloc(
                   userUseCase: RepositoryProvider.of<UserUseCase>(context),

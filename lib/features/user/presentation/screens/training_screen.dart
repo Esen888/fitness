@@ -56,10 +56,10 @@ class _TrainingScreenState extends State<TrainingScreen> {
                         size: 24.r,
                         color: ColorHelper.defaultThemeColor,
                       ),
-
+                    ),
                     Flexible(
                       child: Text(
-                         "${widget.exerciseName}  ",
+                        "${widget.exerciseName}  ",
                         style: TextHelper.w700s20.copyWith(
                             color: ColorHelper.exerciseNameDefaultColor),
                       ),
