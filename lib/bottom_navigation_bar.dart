@@ -1,7 +1,7 @@
 import 'package:BodyPower/features/user/presentation/screens/home_page.dart';
 import 'package:BodyPower/features/news_page/presentation/screens/news_screen.dart';
 import 'package:BodyPower/features/blogger/presentation/screens/course_list_screen.dart';
-import 'package:BodyPower/internal/helpers/color_helper.dart';
+import 'package:BodyPower/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'features/achievement_screen/presentation/screens/achievements_screen.dart';

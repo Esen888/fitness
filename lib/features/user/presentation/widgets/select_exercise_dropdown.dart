@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../internal/helpers/color_helper.dart';
-import '../../../../internal/helpers/text_helper.dart';
+import '../../../../core/utils/app_colors.dart';
+import '../../../../core/utils/app_fonts.dart';
 
 class SelectExerciseDropDown extends StatelessWidget {
   const SelectExerciseDropDown({
@@ -35,7 +35,7 @@ class SelectExerciseDropDown extends StatelessWidget {
           Flexible(
             child: Text(
               "Жим в рычажном тренажере",
-              style: TextHelper.w500s12
+              style: AppFonts.w500s12
                   .copyWith(color: ColorHelper.defaultThemeColor),
             ),
           ),

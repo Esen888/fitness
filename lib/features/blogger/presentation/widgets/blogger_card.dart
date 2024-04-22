@@ -1,9 +1,9 @@
 import 'package:BodyPower/features/blogger/data/models/blogger_model.dart';
 import 'package:BodyPower/features/blogger/presentation/screens/course_information_screen.dart';
-import 'package:BodyPower/internal/helpers/text_helper.dart';
+import 'package:BodyPower/core/utils/app_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../internal/helpers/color_helper.dart';
+import '../../../../core/utils/app_colors.dart';
 
 class BloggerCard extends StatelessWidget {
   const BloggerCard({
@@ -39,7 +39,7 @@ class BloggerCard extends StatelessWidget {
             children: [
               Text(
                 bloggerModel[index].bloggerCardName!,
-                style: TextHelper.w700s20
+                style: AppFonts.w700s20
                     .copyWith(color: ColorHelper.alwaysWhiteFFFFFF),
               ),
               SizedBox(height: 27.h),
@@ -51,7 +51,7 @@ class BloggerCard extends StatelessWidget {
                       padding: EdgeInsets.only(bottom: 11.h),
                       child: Text(
                         bloggerModel[index].bloggerCourseName!,
-                        style: TextHelper.w500s16
+                        style: AppFonts.w500s16
                             .copyWith(color: ColorHelper.alwaysWhiteFFFFFF),
                       ),
                     ),
@@ -70,7 +70,7 @@ class BloggerCard extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  const CourseInformationScreen()));
+                                  const CourseInformationScreen(description: "",titleOfCourse: "",courseId: 0,)));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -78,7 +78,7 @@ class BloggerCard extends StatelessWidget {
                       children: [
                         Text(
                           "Подробнее ",
-                          style: TextHelper.w500s10
+                          style: AppFonts.w500s10
                               .copyWith(color: ColorHelper.alwaysWhiteFFFFFF),
                         ),
                         Icon(

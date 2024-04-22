@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../internal/helpers/color_helper.dart';
-import '../../../../internal/helpers/text_helper.dart';
+import '../../../../core/utils/app_colors.dart';
+import '../../../../core/utils/app_fonts.dart';
 
 class WeightRepeatAddCard extends StatelessWidget {
   const WeightRepeatAddCard({
@@ -22,7 +22,7 @@ class WeightRepeatAddCard extends StatelessWidget {
             decoration: InputDecoration(
               hintText: "Килограммы",
               hintStyle:
-                  TextHelper.w500s12.copyWith(color: ColorHelper.grey878787),
+                  AppFonts.w500s12.copyWith(color: ColorHelper.grey878787),
               filled: true,
               fillColor: ColorHelper.cardsBackground,
               enabledBorder: OutlineInputBorder(
@@ -42,7 +42,7 @@ class WeightRepeatAddCard extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: "Повторений",
                 hintStyle:
-                    TextHelper.w500s12.copyWith(color: ColorHelper.grey878787),
+                    AppFonts.w500s12.copyWith(color: ColorHelper.grey878787),
                 filled: true,
                 fillColor: ColorHelper.cardsBackground,
                 enabledBorder: OutlineInputBorder(

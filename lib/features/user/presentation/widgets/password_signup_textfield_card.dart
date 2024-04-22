@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../internal/helpers/color_helper.dart';
-import '../../../../internal/helpers/text_helper.dart';
+import '../../../../core/utils/app_colors.dart';
+import '../../../../core/utils/app_fonts.dart';
 
 class PasswordSignUpTextFieldCard extends StatefulWidget {
   const PasswordSignUpTextFieldCard({
@@ -20,7 +20,7 @@ class _PasswordSignUpTextFieldCardState
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      style: TextHelper.w700s20.copyWith(color: ColorHelper.greyD1D3D3),
+      style: AppFonts.w700s20.copyWith(color: ColorHelper.greyD1D3D3),
       controller: widget.controller,
       obscureText: _obscureText,
       onChanged: (value) {

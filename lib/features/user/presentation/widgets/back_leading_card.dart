@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../internal/helpers/color_helper.dart';
+import '../../../../core/utils/app_colors.dart';
 
 class BackLeadingCard extends StatelessWidget {
   const BackLeadingCard({

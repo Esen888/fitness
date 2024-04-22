@@ -1,5 +1,5 @@
 import 'dart:developer';
-import 'package:BodyPower/features/user/data/models/user_model.dart';
+import 'package:BodyPower/features/user/data/models/user_model_remove.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../domain/repositories/user_repository.dart';
 

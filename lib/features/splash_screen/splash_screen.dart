@@ -1,5 +1,6 @@
 import 'package:BodyPower/bottom_navigation_bar.dart';
-import 'package:BodyPower/internal/helpers/color_helper.dart';
+import 'package:BodyPower/core/utils/app_colors.dart';
+import 'package:BodyPower/resources/resources.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -22,12 +23,14 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: ColorHelper.splashBackgroundColor,
       body: Center(
-        child: Image.asset(
-          "assets/icons/body_power_icon.png",
-          height: 175.h,
-          width: 200.w,
-          fit: BoxFit.contain,
-          color: ColorHelper.splashIconColor,
+        child: FittedBox(
+            fit: BoxFit.none,
+          child: Image.asset(
+            AppIcons.bodyPowerIcon,
+            height: 175.h,
+            width: 200.w,
+            color: ColorHelper.splashIconColor,
+          ),
         ),
       ),
     );
@@ -46,11 +49,3 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
-// StreamBuilder<User?>(
-//                 stream: FirebaseAuth.instance.authStateChanges(),
-//                 builder: (context, snapshot) {
-//                   if (snapshot.hasData) {
-//                     return const BottomNavBar();
-//                   }
-//                   return const SplashScreen();
-//                 });

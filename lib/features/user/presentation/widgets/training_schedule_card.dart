@@ -1,6 +1,6 @@
 import 'package:BodyPower/features/blogger/data/models/model.dart';
-import 'package:BodyPower/internal/helpers/color_helper.dart';
-import 'package:BodyPower/internal/helpers/text_helper.dart';
+import 'package:BodyPower/core/utils/app_colors.dart';
+import 'package:BodyPower/core/utils/app_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -18,13 +18,12 @@ class TrainingScheduleCard extends StatelessWidget {
           children: [
             Text(
               "Первая тренировка",
-              style:
-                  TextHelper.w500s12.copyWith(color: ColorHelper.green90E072),
+              style: AppFonts.w500s12.copyWith(color: ColorHelper.green90E072),
             ),
             SizedBox(width: 10.w),
             Text(
               "1 час 35 мин",
-              style: TextHelper.w500s12
+              style: AppFonts.w500s12
                   .copyWith(color: ColorHelper.defaultThemeColor),
             ),
           ],
@@ -67,12 +66,12 @@ class TrainingScheduleCard extends StatelessWidget {
                     children: [
                       Text(
                         trainingNames[index],
-                        style: TextHelper.w500s16
+                        style: AppFonts.w500s16
                             .copyWith(color: ColorHelper.alwaysWhiteFFFFFF),
                       ),
                       Text(
-                        "$index упражнение",
-                        style: TextHelper.w500s10.copyWith(
+                        "${index + 1} упражнение",
+                        style: AppFonts.w500s10.copyWith(
                             color:
                                 ColorHelper.alwaysWhiteFFFFFF.withOpacity(0.5)),
                       ),

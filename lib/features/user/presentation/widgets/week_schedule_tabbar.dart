@@ -1,8 +1,8 @@
 import 'package:BodyPower/features/user/presentation/widgets/training_schedule_card.dart';
-import 'package:BodyPower/internal/helpers/color_helper.dart';
+import 'package:BodyPower/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../internal/helpers/text_helper.dart';
+import '../../../../core/utils/app_fonts.dart';
 
 class WeekScheduleTabbar extends StatelessWidget {
   const WeekScheduleTabbar({super.key});
@@ -21,9 +21,9 @@ class WeekScheduleTabbar extends StatelessWidget {
                 bottom: 8.h,
                 top: 10.h,
               ),
-              labelStyle: TextHelper.w500s12,
+              labelStyle: AppFonts.w500s12.copyWith(color: ColorHelper.calendarColor),
               labelColor: ColorHelper.exerciseNameDefaultColor,
-              unselectedLabelColor: ColorHelper.alwaysGreyColor,
+              unselectedLabelColor: const Color(0xff929292),
               indicatorColor: ColorHelper.exerciseNameDefaultColor,
               tabs: const <Widget>[
                 Tab(

@@ -2,8 +2,8 @@ import 'package:BodyPower/bottom_navigation_bar.dart';
 import 'package:BodyPower/features/achievement_screen/presentation/screens/achievements_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../internal/helpers/color_helper.dart';
-import '../../../../internal/helpers/text_helper.dart';
+import '../../../../core/utils/app_colors.dart';
+import '../../../../core/utils/app_fonts.dart';
 
 class MyCourseCard extends StatelessWidget {
   const MyCourseCard({
@@ -33,7 +33,7 @@ class MyCourseCard extends StatelessWidget {
         children: [
           Text(
             "Быстрое похудение",
-            style: TextHelper.w600s16
+            style: AppFonts.w600s16
                 .copyWith(color: ColorHelper.alwaysWhiteFFFFFF),
           ),
           SizedBox(height: 12.h),
@@ -47,7 +47,7 @@ class MyCourseCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   "24 тренировочных дня (3 тренировки в неделю)",
-                  style: TextHelper.w500s10
+                  style: AppFonts.w500s10
                       .copyWith(color: ColorHelper.trainingTypeColor),
                 ),
               ),
@@ -75,7 +75,7 @@ class MyCourseCard extends StatelessWidget {
                         SizedBox(width: 7.w),
                         Text(
                           "Курс для зала",
-                          style: TextHelper.w500s10,
+                          style: AppFonts.w500s10,
                         ),
                       ],
                     ),
@@ -96,7 +96,7 @@ class MyCourseCard extends StatelessWidget {
             },
             style: ElevatedButton.styleFrom(
               fixedSize: Size(
-                202.w,
+                230.w,
                 32.h,
               ),
               backgroundColor: ColorHelper.black101010.withOpacity(0.8),
@@ -114,7 +114,7 @@ class MyCourseCard extends StatelessWidget {
                 SizedBox(width: 4.w),
                 Text(
                   "Посмотреть мои достижения",
-                  style: TextHelper.w500s10
+                  style: AppFonts.w500s10
                       .copyWith(color: ColorHelper.alwaysWhiteFFFFFF),
                 )
               ],

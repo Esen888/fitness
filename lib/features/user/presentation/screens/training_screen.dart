@@ -1,5 +1,6 @@
-import 'package:BodyPower/internal/helpers/color_helper.dart';
-import 'package:BodyPower/internal/helpers/text_helper.dart';
+import 'package:BodyPower/core/utils/app_colors.dart';
+import 'package:BodyPower/core/utils/app_fonts.dart';
+import 'package:BodyPower/features/user/presentation/screens/video_player_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../internal/custom_appbar.dart';
@@ -44,7 +45,7 @@ class TrainingScreen extends StatelessWidget {
                     Flexible(
                       child: Text(
                         "$exerciseName  ",
-                        style: TextHelper.w700s20.copyWith(
+                        style: AppFonts.w700s20.copyWith(
                             color: ColorHelper.exerciseNameDefaultColor),
                       ),
                     ),
@@ -56,7 +57,7 @@ class TrainingScreen extends StatelessWidget {
                     Flexible(
                       child: Text(
                         " Время: 0 сек",
-                        style: TextHelper.w500s12
+                        style: AppFonts.w500s12
                             .copyWith(color: ColorHelper.defaultThemeColor),
                       ),
                     )
@@ -71,7 +72,7 @@ class TrainingScreen extends StatelessWidget {
                   ),
                   child: Text(
                     "3 упражнения (жим, вертикальная тяга, разведение гантелей, пуловер на блоке, подъем ног)",
-                    style: TextHelper.w500s12
+                    style: AppFonts.w500s12
                         .copyWith(color: ColorHelper.exercisesListColor),
                   ),
                 ),
@@ -86,7 +87,7 @@ class TrainingScreen extends StatelessWidget {
                   ),
                   child: Text(
                     "Рекомендуемое время отдыха — 2 минуты",
-                    style: TextHelper.w500s12
+                    style: AppFonts.w500s12
                         .copyWith(color: ColorHelper.recommendedTime),
                   ),
                 ),
@@ -97,7 +98,9 @@ class TrainingScreen extends StatelessWidget {
                       bottom: 24.h,
                     ),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> const VideoPlayerScreen(title: "Просмотр упражнения",)));
+                      },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: ColorHelper.buttonColor,
                           fixedSize: Size(
@@ -109,7 +112,7 @@ class TrainingScreen extends StatelessWidget {
                       child: Text(
                         "Начать тренировку",
                         textAlign: TextAlign.center,
-                        style: TextHelper.w600s12
+                        style: AppFonts.w600s12
                             .copyWith(color: ColorHelper.buttonTextColor),
                       ),
                     ),

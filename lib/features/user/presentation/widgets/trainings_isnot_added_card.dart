@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../internal/helpers/color_helper.dart';
-import '../../../../internal/helpers/text_helper.dart';
+import '../../../../core/utils/app_colors.dart';
+import '../../../../core/utils/app_fonts.dart';
 
 class TrainingsIsNotAddedCard extends StatelessWidget {
   const TrainingsIsNotAddedCard({
@@ -23,13 +23,13 @@ class TrainingsIsNotAddedCard extends StatelessWidget {
           children: [
             Text(
               "🧐",
-              style: TextHelper.w500s24,
+              style: AppFonts.w500s24,
             ),
             SizedBox(height: 4.h),
             Text(
               "Расписание нет, пока вы не \nдобавите курсы",
               textAlign: TextAlign.center,
-              style: TextHelper.w500s12.copyWith(
+              style: AppFonts.w500s12.copyWith(
                 color: ColorHelper.defaultThemeColor,
               ),
             ),
@@ -45,7 +45,7 @@ class TrainingsIsNotAddedCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(14))),
               child: Text(
                 "+ Сделать расписание",
-                style: TextHelper.w500s10.copyWith(
+                style: AppFonts.w500s10.copyWith(
                     color: ColorHelper.buttonTextColor),
               ),
             )

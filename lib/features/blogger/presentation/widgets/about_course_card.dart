@@ -3,12 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../internal/helpers/color_helper.dart';
-import '../../../../internal/helpers/text_helper.dart';
+import '../../../../core/utils/app_colors.dart';
+import '../../../../core/utils/app_fonts.dart';
 
 class AboutCourseCard extends StatelessWidget {
+  final String description;
   const AboutCourseCard({
-    super.key,
+    super.key, required this.description,
   });
 
   @override
@@ -27,8 +28,9 @@ class AboutCourseCard extends StatelessWidget {
               top: 10.h,
             ),
             child: Text(
-              "Курс без боли и травм для вашего организма, поможет вам сбросить вес максимально быстро и восстановить тонус мышц.",
-              style: TextHelper.w500s12
+description,
+              // "Курс без боли и травм для вашего организма, поможет вам сбросить вес максимально быстро и восстановить тонус мышц.",
+              style: AppFonts.w500s12
                   .copyWith(color: ColorHelper.defaultThemeColor),
             ),
           ),
@@ -47,13 +49,13 @@ class AboutCourseCard extends StatelessWidget {
                 SizedBox(width: 6.w),
                 Text(
                   "Игорь Войтенко",
-                  style: TextHelper.w500s12
+                  style: AppFonts.w500s12
                       .copyWith(color: ColorHelper.defaultThemeColor),
                 ),
                 const Spacer(),
                 Text(
                   "“Road to the Dream”",
-                  style: TextHelper.w500s12
+                  style: AppFonts.w500s12
                       .copyWith(color: ColorHelper.defaultThemeColor),
                 )
               ],

@@ -1,10 +1,16 @@
+import 'package:BodyPower/bottom_navigation_bar.dart';
+import 'package:BodyPower/features/blogger/presentation/screens/all_available_courses_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../internal/helpers/color_helper.dart';
-import '../../../../internal/helpers/text_helper.dart';
+import '../../../../core/utils/app_colors.dart';
+import '../../../../core/utils/app_fonts.dart';
 
 class CourseIsNotBoughtCard extends StatelessWidget {
+  final String text;
+  final String emoji;
   const CourseIsNotBoughtCard({
+    this.emoji = "🥱",
+    this.text = "К сожалению вы еще никуда \nне записаны",
     super.key,
   });
 
@@ -24,19 +30,26 @@ class CourseIsNotBoughtCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "🥱",
-              style: TextHelper.w500s24,
+              emoji,
+              style: AppFonts.w500s24,
             ),
             SizedBox(height: 4.h),
             Text(
-              "К сожалению вы еще никуда \nне записаны",
+              text,
               textAlign: TextAlign.center,
-              style: TextHelper.w500s12.copyWith(
+              style: AppFonts.w500s12.copyWith(
                 color: ColorHelper.defaultThemeColor,
               ),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const BottomNavBar(
+                              selectedTab: 2,
+                            )));
+              },
               style: ElevatedButton.styleFrom(
                   fixedSize: Size(
                     152.w,
@@ -47,7 +60,7 @@ class CourseIsNotBoughtCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(14))),
               child: Text(
                 "+ Добавить курс",
-                style: TextHelper.w500s10
+                style: AppFonts.w500s10
                     .copyWith(color: ColorHelper.buttonTextColor),
               ),
             )

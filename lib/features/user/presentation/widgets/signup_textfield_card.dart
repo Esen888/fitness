@@ -1,7 +1,7 @@
-import 'package:BodyPower/internal/helpers/text_helper.dart';
+import 'package:BodyPower/core/utils/app_fonts.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
-import '../../../../internal/helpers/color_helper.dart';
+import '../../../../core/utils/app_colors.dart';
 
 class SignUpTextFieldCard extends StatefulWidget {
   const SignUpTextFieldCard({
@@ -23,7 +23,7 @@ class _SignUpTextFieldCardState extends State<SignUpTextFieldCard> {
     return TextFormField(
       keyboardType: TextInputType.phone,
       controller: widget.phoneNumberController,
-      style: TextHelper.w700s18.copyWith(color: ColorHelper.greyD1D3D3),
+      style: AppFonts.w700s18.copyWith(color: ColorHelper.greyD1D3D3),
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
@@ -61,7 +61,7 @@ class _SignUpTextFieldCardState extends State<SignUpTextFieldCard> {
             });
           },
           initialSelection: 'KG',
-          textStyle: TextHelper.w700s18.copyWith(color: ColorHelper.greyD1D3D3),
+          textStyle: AppFonts.w700s18.copyWith(color: ColorHelper.greyD1D3D3),
           showCountryOnly: false,
           showOnlyCountryWhenClosed: false,
           alignLeft: false,

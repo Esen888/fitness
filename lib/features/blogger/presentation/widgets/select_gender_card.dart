@@ -1,5 +1,5 @@
-import 'package:BodyPower/internal/helpers/color_helper.dart';
-import 'package:BodyPower/internal/helpers/text_helper.dart';
+import 'package:BodyPower/core/utils/app_colors.dart';
+import 'package:BodyPower/core/utils/app_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -57,14 +57,14 @@ class SelectGenderCard extends StatelessWidget {
               children: [
                 Text(
                   "Курс для Мужчин 👱‍♂️‍️",
-                  style: TextHelper.w600s10
+                  style: AppFonts.w600s10
                       .copyWith(color: ColorHelper.defaultThemeColor),
                 ),
                 SizedBox(
                   width: 156.w,
                   child: Text(
                     "Если хотите изменить пол на женский, нажмите кнопку “Изменить пол”",
-                    style: TextHelper.w500s10
+                    style: AppFonts.w500s10
                         .copyWith(color: ColorHelper.alwaysGrey929292),
                   ),
                 ),
@@ -82,7 +82,7 @@ class SelectGenderCard extends StatelessWidget {
                     children: [
                       Text(
                         "Изменить пол",
-                        style: TextHelper.w500s12
+                        style: AppFonts.w500s12
                             .copyWith(color: ColorHelper.buttonTextColor),
                       ),
                       SizedBox(width: 5.w),

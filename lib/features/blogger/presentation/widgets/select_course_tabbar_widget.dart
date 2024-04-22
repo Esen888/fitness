@@ -1,7 +1,7 @@
-import 'package:BodyPower/internal/helpers/color_helper.dart';
+import 'package:BodyPower/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../internal/helpers/text_helper.dart';
+import '../../../../core/utils/app_fonts.dart';
 import '../../data/models/blogger_model.dart';
 import 'blogger_card.dart';
 
@@ -21,9 +21,9 @@ class SelectCourseTabbarWidget extends StatelessWidget {
             TabBar(
               // labelPadding: EdgeInsets.only(top: 30.h),
               padding: EdgeInsets.only(bottom: 10.h),
-              labelStyle: TextHelper.w500s16,
+              labelStyle: AppFonts.w500s16,
               labelColor: ColorHelper.defaultThemeColor,
-              unselectedLabelStyle: TextHelper.w500s16,
+              unselectedLabelStyle: AppFonts.w500s16,
               unselectedLabelColor: ColorHelper.alwaysGrey929292,
               indicatorColor: Colors.transparent,
               tabs: const <Widget>[

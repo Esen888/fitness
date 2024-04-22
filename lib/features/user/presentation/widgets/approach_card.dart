@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../internal/helpers/color_helper.dart';
-import '../../../../internal/helpers/text_helper.dart';
+import '../../../../core/utils/app_colors.dart';
+import '../../../../core/utils/app_fonts.dart';
 import '../screens/training_screen.dart';
 
 class ApproachCards extends StatefulWidget {
@@ -48,13 +48,13 @@ class _ApproachCardsState extends State<ApproachCards> {
                       borderRadius: BorderRadius.circular(14.r)),
                   child: Text(
                     "20",
-                    style: TextHelper.w500s24
+                    style: AppFonts.w500s24
                         .copyWith(color: ColorHelper.splashIconColor),
                   ),
                 ),
                 Text(
                   "Повторений требуется",
-                  style: TextHelper.w500s12
+                  style: AppFonts.w500s12
                       .copyWith(color: ColorHelper.defaultThemeColor),
                 ),
               ],
@@ -88,13 +88,13 @@ class _ApproachCardsState extends State<ApproachCards> {
                       borderRadius: BorderRadius.circular(14.r)),
                   child: Text(
                     "1/2",
-                    style: TextHelper.w500s24
+                    style: AppFonts.w500s24
                         .copyWith(color: ColorHelper.splashIconColor),
                   ),
                 ),
                 Text(
                   "Подходов выполнено",
-                  style: TextHelper.w500s12
+                  style: AppFonts.w500s12
                       .copyWith(color: ColorHelper.defaultThemeColor),
                 ),
               ],
