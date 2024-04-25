@@ -5,5 +5,7 @@ class GetTrialVersionRepoImpl implements GetTrialVersionRepo {
   GetTrialVersionUseCase useCase;
   GetTrialVersionRepoImpl({required this.useCase});
   @override
-  Future<void> getTrialVersion({required int courseId}) async {}
+  Future<void> getTrialVersion({required int courseId}) async {
+    await useCase.getTrialVersion(courseId: courseId);
+  }
 }

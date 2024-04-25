@@ -21,4 +21,6 @@ abstract class UrlRoutes {
   static const String allCourses = "/courses/all";
   static const String getTrialVersion = "/free-payment?";
   static const String coursesForGuests = "/courses/all-guest";
+  static const String showCoursesInCalendar = "/courses/show";
 }
+

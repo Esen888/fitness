@@ -11,6 +11,11 @@ class GetTrialVersionInitial extends GetTrialVersionState {}
 
 class GetTrialVersionLoading extends GetTrialVersionState {}
 
-class GetTrialVersionSucces extends GetTrialVersionState {}
+class GetTrialVersionSucces extends GetTrialVersionState {
+  
+}
 
-class GetTrialVersionError extends GetTrialVersionState {}
+class GetTrialVersionError extends GetTrialVersionState {
+  final String errorText;
+  const GetTrialVersionError({required this.errorText});
+}

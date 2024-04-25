@@ -1,38 +1,60 @@
-import 'package:BodyPower/core/utils/app_colors.dart';
-import 'package:BodyPower/core/utils/app_fonts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
-  final String title;
-  const VideoPlayerScreen({super.key, required this.title});
+  final String videoLink;
+  const VideoPlayerScreen({Key? key, required this.videoLink})
+      : super(key: key);
 
   @override
   State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
 }
 
 class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
-  late YoutubePlayerController controller;
+  YoutubePlayerController? controller;
 
   @override
   void initState() {
-    controller = YoutubePlayerController(
-        initialVideoId: YoutubePlayer.convertUrlToId(
-            "https://youtu.be/Gmk46Tur1Uc?si=AXwBE3oheNIljU8l")!)
-      ..addListener(() {
-        if (mounted) {}
-      });
     super.initState();
+    if (widget.videoLink.isNotEmpty && _isValidUrl(widget.videoLink)) {
+      final videoId = YoutubePlayer.convertUrlToId(widget.videoLink);
+      if (videoId != null) {
+        controller = YoutubePlayerController(
+          initialVideoId: videoId,
+        );
+      } else {
+        controller = YoutubePlayerController(
+            initialVideoId: YoutubePlayer.convertUrlToId(
+                    "https://youtu.be/wiDjjB0nx_g?si=7GD2_3R8NUyKNGAb") ??
+                "");
+      }
+    } else {
+      controller = YoutubePlayerController(
+          initialVideoId: YoutubePlayer.convertUrlToId(
+                  "https://youtu.be/wiDjjB0nx_g?si=7GD2_3R8NUyKNGAb") ??
+              "");
+    }
+  }
+
+  bool _isValidUrl(String url) {
+    try {
+      Uri.parse(url);
+      return true;
+    } catch (_) {
+      return false;
+    }
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+    controller?.dispose();
     super.dispose();
   }
-
-  @override
+@override
   Widget build(BuildContext context) {
     return OrientationBuilder(
         builder: (BuildContext context, Orientation orientation) {
@@ -43,7 +65,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       } else {
         return Scaffold(
           appBar: AppBar(
-            title: Text(widget.title),
+            title: const Text("Просмотр упражнения"),
           ),
           body: youtubeHierarchy(),
         );
@@ -58,7 +80,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         child: FittedBox(
           fit: BoxFit.fill,
           child: YoutubePlayer(
-            controller: controller,
+            controller: controller??YoutubePlayerController(initialVideoId: "https://youtu.be/wiDjjB0nx_g?si=7GD2_3R8NUyKNGAb"),
           ),
         ),
       ),

@@ -15,6 +15,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MyProfileScreen extends StatefulWidget {
   const MyProfileScreen({super.key});
@@ -153,7 +154,11 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
             //   willNavigate: false,
             // ),
             CustomProfileSettingsButton(
-                icon: AppIcons.privatness, text: "политика конфиденциальности", onTap: () {}),
+                icon: AppIcons.privatness,
+                text: "Политика конфиденциальности",
+                onTap: () {
+                  _launchUrl(url: "http://body-power.site/policy");
+                }),
             // CustomProfileSettingsButton(
             //     icon: AppIcons.language, text: "Язык", onTap: () {}),
             isAuthorized
@@ -245,5 +250,11 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _launchUrl({required String url}) async {
+    if (!await launchUrl(Uri.parse(url))) {
+      throw Exception('Could not launch $url');
+    }
   }
 }

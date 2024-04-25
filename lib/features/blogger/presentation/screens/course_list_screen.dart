@@ -152,6 +152,7 @@ class _CourseListScreenState extends State<CourseListScreen>
                                               vertical: 7.h),
                                           child: CustomCourceCard(
                                               onTap: () {
+                                                print(state.model.data?.data?[index].id);
                                                 Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
@@ -178,7 +179,8 @@ class _CourseListScreenState extends State<CourseListScreen>
                                                                           index]
                                                                       .name ??
                                                                   "",
-                                                            )));
+                                                            ))
+                                                            );
                                               },
                                               photoOfCource: state.model.data
                                                       ?.data?[index].imageUrl ??

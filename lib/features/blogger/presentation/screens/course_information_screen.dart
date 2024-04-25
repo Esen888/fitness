@@ -24,6 +24,7 @@ class CourseInformationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(courseId);
     return LoaderOverlay(
       child: Scaffold(
         appBar: const CustomAppBar(),
@@ -65,8 +66,8 @@ class CourseInformationScreen extends StatelessWidget {
                           SizedBox(height: 6.h),
                           Text(
                             "24 тренировочных дня (3 тренировки в неделю)",
-                            style: AppFonts.w500s12
-                                .copyWith(color: ColorHelper.exercisesListColor),
+                            style: AppFonts.w500s12.copyWith(
+                                color: ColorHelper.exercisesListColor),
                           ),
                         ],
                       ),
@@ -82,8 +83,8 @@ class CourseInformationScreen extends StatelessWidget {
                         top: 12.h,
                         bottom: 18.h,
                       ),
-                      child:
-                          BlocListener<GetTrialVersionBloc, GetTrialVersionState>(
+                      child: BlocListener<GetTrialVersionBloc,
+                          GetTrialVersionState>(
                         listener: (context, state) {
                           if (state is GetTrialVersionSucces) {
                             QuickAlert.show(
@@ -98,17 +99,19 @@ class CourseInformationScreen extends StatelessWidget {
                               },
                             );
                           } else if (state is GetTrialVersionError) {
-                            QuickAlert.show(
-                              context: context,
-                              title: "Ошибка",
-                              type: QuickAlertType.error,
-                              text: "Не удалось получить пробный курс",
-                              barrierDismissible: true,
-                              confirmBtnText: "Ок",
-                              onConfirmBtnTap: () {
-                                Navigator.pop(context);
-                              },
-                            );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(state.errorText)));
+                            // QuickAlert.show(
+                            //   context: context,
+                            //   title: "Ошибка",
+                            //   type: QuickAlertType.error,
+                            //   text: "Не удалось получить пробный курс",
+                            //   barrierDismissible: true,
+                            //   confirmBtnText: "Ок",
+                            //   onConfirmBtnTap: () {
+                            //     Navigator.pop(context);
+                            //   },
+                            // );
                           }
                         },
                         child: ElevatedButton(
@@ -118,6 +121,7 @@ class CourseInformationScreen extends StatelessWidget {
                             40.h,
                           )),
                           onPressed: () {
+                            print(courseId);
                             BlocProvider.of<GetTrialVersionBloc>(context)
                                 .add(GetTrialVersionEvent(courseId: courseId));
                           },
@@ -133,7 +137,7 @@ class CourseInformationScreen extends StatelessWidget {
                   listener: (context, state) {
                     if (state is BuyCourseSuccess) {
                       context.loaderOverlay.hide();
-      
+
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -141,8 +145,8 @@ class CourseInformationScreen extends StatelessWidget {
                                   urlOfWeb: state.model.data?.url ?? "")));
                     } else if (state is BuyCourseError) {
                       context.loaderOverlay.hide();
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text(state.errorText)));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(state.errorText)));
                     } else if (state is BuyCourseLoading) {
                       context.loaderOverlay.show();
                     }

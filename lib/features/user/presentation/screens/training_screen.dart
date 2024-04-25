@@ -99,7 +99,7 @@ class TrainingScreen extends StatelessWidget {
                     ),
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=> const VideoPlayerScreen(title: "Просмотр упражнения",)));
+                        // Navigator.push(context, MaterialPageRoute(builder: (context)=> const VideoPlayerScreen()));
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: ColorHelper.buttonColor,

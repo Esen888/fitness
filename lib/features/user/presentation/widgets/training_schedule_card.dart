@@ -7,7 +7,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../screens/training_screen.dart';
 
 class TrainingScheduleCard extends StatelessWidget {
-  const TrainingScheduleCard({super.key});
+  final int itemCount;
+   
+  const TrainingScheduleCard({super.key, required this.itemCount});
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,7 @@ class TrainingScheduleCard extends StatelessWidget {
         ),
         Expanded(
           child: ListView.builder(
+            
             padding: EdgeInsets.only(top: 8.h),
             // physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
@@ -80,7 +83,7 @@ class TrainingScheduleCard extends StatelessWidget {
                 ),
               );
             },
-            itemCount: trainingImages.length,
+            itemCount: itemCount,
           ),
         ),
       ],

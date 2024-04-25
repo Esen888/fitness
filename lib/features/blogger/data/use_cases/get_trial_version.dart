@@ -7,8 +7,9 @@ class GetTrialVersionUseCase {
   final SharedPreferences prefs;
   GetTrialVersionUseCase({required this.dio, required this.prefs});
   Future<void> getTrialVersion({required int courseId}) async {
-    await dio.get(UrlRoutes.getTrialVersion, queryParameters: {
-      "course_id": courseId,
-    });
+    await dio.get("${UrlRoutes.getTrialVersion}course_id=$courseId",
+        options: Options(headers: {
+          "Authorization": "Bearer ${prefs.getString("access_token")}"
+        }));
   }
 }
