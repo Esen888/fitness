@@ -25,6 +25,7 @@ class CourseListScreen extends StatefulWidget {
 class _CourseListScreenState extends State<CourseListScreen>
     with SingleTickerProviderStateMixin {
   int selectedSection = 0;
+  int defaultCourseId = 1;
   SharedPreferences preferences = locator<SharedPreferences>();
 
   @override
@@ -39,7 +40,7 @@ class _CourseListScreenState extends State<CourseListScreen>
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<GetListOfCoursesInSectionBloc>(context)
-        .add(GetListOfCoursesInSectionEvent(id: selectedSection));
+        .add(GetListOfCoursesInSectionEvent(id: defaultCourseId));
     bool isAuthorized = preferences.getString("access_token") != null;
     return isAuthorized
         ? BlocBuilder<GetListOfSectionsBloc, GetListOfSectionsState>(
@@ -88,13 +89,16 @@ class _CourseListScreenState extends State<CourseListScreen>
                                         onTap: () {
                                           setState(() {
                                             selectedSection = index;
+                                            defaultCourseId =  state.model.data[index].id;
                                           });
                                           BlocProvider.of<
                                                       GetListOfCoursesInSectionBloc>(
                                                   context)
                                               .add(
                                                   GetListOfCoursesInSectionEvent(
-                                                      id: selectedSection));
+                                                      id: 
+                                                      state.model.data[index].id
+                                                      ));
                                         },
                                         child: Text(
                                           state.model.data[index].name,

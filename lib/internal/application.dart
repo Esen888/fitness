@@ -1,5 +1,4 @@
 import 'package:BodyPower/config/dependency_injection/locator.dart';
-import 'package:BodyPower/config/theme/change_theme_provider.dart';
 import 'package:BodyPower/core/network/dio_settings.dart';
 import 'package:BodyPower/features/achievement_screen/data/repositories/get_weights_repo_impl.dart';
 import 'package:BodyPower/features/achievement_screen/data/repositories/save_weight_repo_impl.dart';
@@ -26,9 +25,9 @@ import 'package:BodyPower/features/blogger/presentation/blocs/get_list_of_course
 import 'package:BodyPower/features/blogger/presentation/blocs/get_sections_list/get_list_of_sections_bloc.dart';
 import 'package:BodyPower/features/blogger/presentation/blocs/get_trial_version_bloc/get_trial_version_bloc.dart';
 import 'package:BodyPower/features/blogger/presentation/provider/change_gender_provider.dart';
+import 'package:BodyPower/features/blogger/presentation/provider/default_course_index.dart';
 import 'package:BodyPower/features/news_page/data/repository/get_news_list_impl.dart';
 import 'package:BodyPower/features/news_page/data/usecases/get_news_list.dart';
-import 'package:BodyPower/features/news_page/domain/use_case/news_use_case.dart';
 import 'package:BodyPower/features/news_page/presentation/blocs/news_list_bloc/news_list_bloc.dart';
 import 'package:BodyPower/features/splash_screen/splash_screen.dart';
 import 'package:BodyPower/features/user/data/data_sources/authorization_usecase.dart';
@@ -45,7 +44,6 @@ import 'package:BodyPower/features/user/data/repository/get_user_info.dart';
 import 'package:BodyPower/features/user/data/repository/login_repo_impl.dart';
 import 'package:BodyPower/features/user/data/repository/logout_repo_impl.dart';
 import 'package:BodyPower/features/user/data/repository/user_courses_repo_impl.dart';
-import 'package:BodyPower/features/user/domain/use_case/user_use_case.dart';
 import 'package:BodyPower/features/user/presentation/blocs/authorization/authorization_bloc.dart';
 import 'package:BodyPower/features/user/presentation/blocs/cource_bloc/cource_bloc.dart';
 import 'package:BodyPower/features/user/presentation/blocs/get_user_courses_bloc/get_user_courses_bloc.dart';
@@ -57,7 +55,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import '../features/user/domain/use_case/authentification_use_case.dart';
 import '../core/utils/app_colors.dart';
 
 class MyApp extends StatelessWidget {
@@ -305,6 +302,8 @@ class MyApp extends StatelessWidget {
                             RepositoryProvider.of<SharedPreferencesRepository>(
                                     context)
                                 .prefs)),
+                ChangeNotifierProvider(
+                    create: (context) => DefaultCourseIndexProvider())
               ],
               child: ScreenUtilInit(
                 designSize: const Size(375, 812),

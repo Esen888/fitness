@@ -1,7 +1,10 @@
 import 'package:BodyPower/config/dependency_injection/locator.dart';
+import 'package:BodyPower/core/services/tabs.dart';
 import 'package:BodyPower/features/achievement_screen/presentation/widgets/graphic_card.dart';
-import 'package:BodyPower/features/blogger/presentation/blocs/get_list_of_courses_in_section_bloc/get_list_of_courses_in_section_bloc.dart';
 import 'package:BodyPower/features/blogger/presentation/blocs/get_sections_list/get_list_of_sections_bloc.dart';
+import 'package:BodyPower/features/blogger/presentation/provider/default_course_index.dart';
+import 'package:BodyPower/features/user/data/models/course_model.dart';
+import 'package:BodyPower/features/user/data/models/total_courses_model.dart';
 import 'package:BodyPower/features/user/presentation/blocs/cource_bloc/cource_bloc.dart';
 import 'package:BodyPower/core/utils/app_colors.dart';
 import 'package:BodyPower/features/user/presentation/blocs/total_courses_bloc/get_total_user_courses_bloc.dart';
@@ -9,9 +12,8 @@ import 'package:BodyPower/features/user/presentation/blocs/user_info_bloc/user_i
 import 'package:BodyPower/features/user/presentation/screens/sign_up_screen.dart';
 import 'package:BodyPower/features/user/presentation/screens/video_player_screen.dart';
 import 'package:BodyPower/features/user/presentation/widgets/course_isnot_bought_card.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:BodyPower/features/user/presentation/widgets/week_schedule_tabbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -19,7 +21,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/utils/app_fonts.dart';
 
 class HomePageScreen extends StatefulWidget {
-  const HomePageScreen({super.key});
+  const HomePageScreen({
+    super.key,
+  });
 
   @override
   State<HomePageScreen> createState() => _HomePageScreenState();
@@ -31,47 +35,30 @@ class _HomePageScreenState extends State<HomePageScreen>
   int selectedCourseId = 1;
   int selectedWeek = 0;
   late TabController _controller;
-  List<Widget> tabs = const <Widget>[
-    Tab(
-      text: "Пн",
-    ),
-    Tab(
-      text: "Вт",
-    ),
-    Tab(
-      text: "Ср",
-    ),
-    Tab(
-      text: "Чт",
-    ),
-    Tab(
-      text: "Пт",
-    ),
-    Tab(
-      text: "Сб",
-    ),
-    Tab(
-      text: "Вс",
-    ),
-  ];
+  List<Widget> tabs = TabsService.tabs;
   SharedPreferences preferences = locator<SharedPreferences>();
 
   String date = DateFormat("yyyy, dd - MMMM").format(DateTime.now());
   bool isBought = true;
   bool showTrainingSchedule = false;
+  int _selectedIndex = 0;
 
   @override
   void initState() {
-    _controller = TabController(length: tabs.length, vsync: this);
+    _controller = TabController(
+      length: tabs.length,
+      vsync: this,
+    );
     BlocProvider.of<GetListOfSectionsBloc>(context)
         .add(const GetListOfSectionsEvent());
     BlocProvider.of<GetTotalUserCoursesBloc>(context)
         .add(const GetTotalUserCoursesEvent());
     BlocProvider.of<UserInfoBloc>(context).add(const UserInfoEvent());
-
-    BlocProvider.of<CourceBloc>(context)
-        .add(CourceEvent(courceId: selectedCourseId));
-
+    _controller.addListener(() {
+      setState(() {
+        _selectedIndex = _controller.index;
+      });
+    });
     super.initState();
   }
 
@@ -84,7 +71,9 @@ class _HomePageScreenState extends State<HomePageScreen>
   @override
   Widget build(BuildContext context) {
     bool isAuthorized = preferences.getString("access_token") != null;
-
+    BlocProvider.of<CourceBloc>(context).add(CourceEvent(
+        courceId: context.watch<DefaultCourseIndexProvider>().myCoursesId));
+    selectedSection = context.watch<DefaultCourseIndexProvider>().myCoursesId;
     return BlocListener<UserInfoBloc, UserInfoState>(
       listener: (context, state) {
         if (state is UserInfoError) {
@@ -102,10 +91,7 @@ class _HomePageScreenState extends State<HomePageScreen>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               InkWell(
-                onTap: () {
-                  BlocProvider.of<GetListOfCoursesInSectionBloc>(context)
-                      .add(const GetListOfCoursesInSectionEvent(id: 1));
-                },
+                onTap: () {},
                 child: Text(
                   "Мои курсы",
                   style: AppFonts.w700s16
@@ -120,6 +106,8 @@ class _HomePageScreenState extends State<HomePageScreen>
                               GetTotalUserCoursesState>(
                             builder: (context, state) {
                               if (state is GetTotalUserCoursesSuccess) {
+                                List<Datum>? courseList;
+                                List<int?>? coursesIds;
                                 return Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
@@ -133,34 +121,45 @@ class _HomePageScreenState extends State<HomePageScreen>
                                             itemCount:
                                                 state.model.data?.length ?? 0,
                                             itemBuilder: (context, index) {
+                                              courseList = state.model.data;
+                                              coursesIds = courseList?.map((e) => e.id,).toList();
                                               return Padding(
                                                 padding: EdgeInsets.only(
                                                   right: 30.w,
                                                 ),
                                                 child: InkWell(
                                                   onTap: () {
+
                                                     setState(() {
+                                                      context
+                                                          .read<
+                                                              DefaultCourseIndexProvider>()
+                                                          .changeIndex(
+                                                              index: index);
                                                       selectedCourseId = state
                                                               .model
                                                               .data?[index]
                                                               .id ??
                                                           1;
                                                       selectedSection = index;
-                                                      BlocProvider.of<
-                                                                  CourceBloc>(
-                                                              context)
-                                                          .add(CourceEvent(
-                                                              courceId:
-                                                                  selectedCourseId));
+                                                      context
+                                                          .read<
+                                                              DefaultCourseIndexProvider>()
+                                                          .changeIndex(
+                                                              index:
+                                                                  selectedCourseId);
+
                                                     });
+                                                    // print(courseList?.map((e) => e.id));
                                                   },
                                                   child: Text(
                                                     state.model.data?[index]
                                                             .name ??
                                                         "",
+                                                      
                                                     style: AppFonts.w500s16.copyWith(
                                                         color: selectedSection ==
-                                                                index
+                                                                coursesIds?[index]
                                                             ? const Color(
                                                                 0xff90E072)
                                                             : const Color(
@@ -171,22 +170,6 @@ class _HomePageScreenState extends State<HomePageScreen>
                                             }),
                                       ),
                                     ),
-                                    // SizedBox(
-                                    //   height: 180.h,
-                                    //   child: ClipRRect(
-                                    //     borderRadius: BorderRadius.circular(14.r),
-                                    //     child: MyCoursesCard(
-                                    //       courseImage: state
-                                    //               .model
-                                    //               .data?[selectedSection]
-                                    //               .imageUrl ??
-                                    //           "",
-                                    //       courseTitle: state.model
-                                    //               .data?[selectedSection].name ??
-                                    //           "",
-                                    //     ),
-                                    //   ),
-                                    // ),
                                   ],
                                 );
                               } else if (state is GetTotalUserCoursesLoading) {
@@ -200,9 +183,6 @@ class _HomePageScreenState extends State<HomePageScreen>
                                   style: AppFonts.w500s12.copyWith(
                                       color: ColorHelper.defaultThemeColor),
                                 ));
-                                // return const ErrorScreen(
-                                //   isInternetError: false,
-                                // );
                               }
                               return const SizedBox();
                             },
@@ -251,199 +231,235 @@ class _HomePageScreenState extends State<HomePageScreen>
                                 child: CircularProgressIndicator.adaptive(),
                               );
                             } else if (state is CourceSuccess) {
-                              return Column(children: [
-                                SizedBox(
-                                    height: 20.h,
-                                    child: ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount:
-                                            state.model.data?.weeks?.length ??
-                                                0,
-                                        itemBuilder: (context, index) {
-                                          return Padding(
-                                            padding:
-                                                EdgeInsets.only(left: 25.w),
-                                            child: InkWell(
-                                              onTap: () {
-                                                print(index);
-                                                setState(() {
-                                                  selectedWeek = index;
-                                                });
-                                              },
-                                              child: Text(
-                                                "Неделя ${index + 1}",
-                                                style: AppFonts.w500s16
-                                                    .copyWith(
-                                                        color: selectedWeek ==
-                                                                index
-                                                            ? const Color(
-                                                                0xff90E072)
-                                                            : const Color(
-                                                                0xff808080)),
-                                              ),
-                                            ),
-                                          );
-                                        })),
+                              bool isWeekNotEmpty =
+                                  state.model.data?.weeks?.isNotEmpty ?? false;
+                              late List<Exercise>? exercises;
+                              return isWeekNotEmpty
+                                  ? Column(children: [
+                                      SizedBox(
+                                          height: 20.h,
+                                          child: ListView.builder(
+                                              scrollDirection: Axis.horizontal,
+                                              itemCount: state.model.data?.weeks
+                                                      ?.length ??
+                                                  0,
+                                              itemBuilder: (context, index) {
+                                                exercises = state
+                                                        .model
+                                                        .data
+                                                        ?.weeks?[index]
+                                                        .days?[index]
+                                                        .exercises ??
+                                                    [];
+                                                return Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: 25.w),
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      // print(index);
+                                                      setState(() {
+                                                        selectedWeek = index;
+                                                      });
+                                                    },
+                                                    child: Text(
+                                                      "Неделя ${index + 1}",
+                                                      style: AppFonts.w500s16.copyWith(
+                                                          color: selectedWeek ==
+                                                                  index
+                                                              ? const Color(
+                                                                  0xff90E072)
+                                                              : const Color(
+                                                                  0xff808080)),
+                                                    ),
+                                                  ),
+                                                );
+                                              })),
 
-                                //  const WeekScheduleTabbar()
-                                Expanded(
-                                  child: DefaultTabController(
-                                    initialIndex: 0,
-                                    length: 7,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        TabBar(
-                                            padding: EdgeInsets.only(
-                                              bottom: 8.h,
-                                              top: 10.h,
-                                            ),
-                                            labelStyle: AppFonts.w500s12
-                                                .copyWith(
-                                                    color: ColorHelper
-                                                        .calendarColor),
-                                            labelColor: ColorHelper
-                                                .exerciseNameDefaultColor,
-                                            unselectedLabelColor:
-                                                const Color(0xff929292),
-                                            indicatorColor: ColorHelper
-                                                .exerciseNameDefaultColor,
-                                            tabs: tabs),
-                                        Expanded(
-                                            child: TabBarView(
-                                          // physics: NeverScrollableScrollPhysics(),
-                                          children: <Widget>[
-                                            for (int i = 0;
-                                                i < tabs.length;
-                                                i++)
-                                              ListView.builder(
-                                                  itemCount: state
-                                                          .model
-                                                          .data
-                                                          ?.weeks
-                                                          ?.first
-                                                          .days?[i]
-                                                          .exercises
-                                                          ?.length ??
-                                                      0,
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    return InkWell(
-                                                      onTap: () {
+                                      //  const WeekScheduleTabbar(),
+                                      Expanded(
+                                        child: DefaultTabController(
+                                          initialIndex: 0,
+                                          length: 7,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              TabBar(
+                                                  controller: _controller,
+                                                  padding: EdgeInsets.only(
+                                                    bottom: 8.h,
+                                                    top: 10.h,
+                                                  ),
+                                                  labelStyle: AppFonts.w500s12
+                                                      .copyWith(
+                                                          color: ColorHelper
+                                                              .calendarColor),
+                                                  labelColor: ColorHelper
+                                                      .exerciseNameDefaultColor,
+                                                  unselectedLabelColor:
+                                                      const Color(0xff929292),
+                                                  indicatorColor: ColorHelper
+                                                      .exerciseNameDefaultColor,
+                                                  tabs: tabs),
+                                              Expanded(
+                                                  child: TabBarView(
+                                                controller: _controller,
+                                                // physics: NeverScrollableScrollPhysics(),
+                                                children: <Widget>[
+                                                  for (int i = 0;
+                                                      i < tabs.length;
+                                                      i++)
+                                                    ListView.builder(
+                                                      itemCount: state
+                                                              .model
+                                                              .data
+                                                              ?.weeks?[
+                                                                  selectedWeek]
+                                                              .days?[_controller
+                                                                  .index]
+                                                              .exercises
+                                                              ?.length ??
+                                                          0,
+                                                      itemBuilder:
+                                                          (context, index) {
+                                                        print(
+                                                            "this is listview length");
                                                         print(state
-                                                            .model
-                                                            .data
-                                                            ?.weeks?[
-                                                                selectedWeek]
-                                                            .days?[_controller
-                                                                .index]
-                                                            .exercises?[i]
-                                                            .video);
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder: (context) => VideoPlayerScreen(
-                                                                    videoLink: state
-                                                                            .model
-                                                                            .data
-                                                                            ?.weeks?[selectedWeek]
-                                                                            .days?[_controller.index]
-                                                                            .exercises?[i]
-                                                                            .video ??
-                                                                        "")));
+                                                                .model
+                                                                .data
+                                                                ?.weeks?[
+                                                                    selectedWeek]
+                                                                .days?[
+                                                                    _controller
+                                                                        .index]
+                                                                .exercises
+                                                                ?.length ??
+                                                            0);
+                                                        print(
+                                                            "this is selected week: $selectedWeek");
+                                                        return InkWell(
+                                                          onTap: () => Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (context) => VideoPlayerScreen(
+                                                                      videoLink: state
+                                                                              .model
+                                                                              .data
+                                                                              ?.weeks?[selectedWeek]
+                                                                              .days?[_controller.index]
+                                                                              .exercises?[index]
+                                                                              .video ??
+                                                                          ""))),
+                                                          child: Container(
+                                                            height: 170.h,
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    top: 13.h),
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .vertical(
+                                                                top: index == 0
+                                                                    ? Radius
+                                                                        .circular(14
+                                                                            .r)
+                                                                    : const Radius
+                                                                        .circular(
+                                                                        0),
+                                                                bottom: index ==
+                                                                        (state.model.data?.weeks?[selectedWeek].days?[_controller.index].exercises?.length ??
+                                                                                0) -
+                                                                            1
+                                                                    ? Radius
+                                                                        .circular(14
+                                                                            .r)
+                                                                    : const Radius
+                                                                        .circular(
+                                                                        0),
+                                                              ),
+                                                              image:
+                                                                  DecorationImage(
+                                                                image: NetworkImage(state
+                                                                        .model
+                                                                        .data
+                                                                        ?.weeks?[
+                                                                            selectedWeek]
+                                                                        .days?[_controller
+                                                                            .index]
+                                                                        .exercises?[
+                                                                            index]
+                                                                        .imageUrl ??
+                                                                    ""),
+                                                                fit:
+                                                                    BoxFit.fill,
+                                                              ),
+                                                            ),
+                                                            child: Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                Text(
+                                                                  state
+                                                                          .model
+                                                                          .data
+                                                                          ?.weeks?[
+                                                                              selectedWeek]
+                                                                          .days?[_controller
+                                                                              .index]
+                                                                          .exercises?[
+                                                                              index]
+                                                                          .name ??
+                                                                      "",
+                                                                  style: AppFonts
+                                                                      .w500s16
+                                                                      .copyWith(
+                                                                          color:
+                                                                              ColorHelper.alwaysWhiteFFFFFF),
+                                                                ),
+                                                                Text(
+                                                                  "${index + 1} упражнение",
+                                                                  style: AppFonts
+                                                                      .w500s10
+                                                                      .copyWith(
+                                                                          color: ColorHelper
+                                                                              .alwaysWhiteFFFFFF
+                                                                              .withOpacity(0.5)),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        );
                                                       },
-                                                      child: Container(
-                                                        height: 170.h,
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                top: 13.h),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .vertical(
-                                                            top: index == 0
-                                                                ? Radius
-                                                                    .circular(
-                                                                        14.r)
-                                                                : const Radius
-                                                                    .circular(
-                                                                    0),
-                                                            bottom: index ==
-                                                                    (state.model.data?.weeks?.first.days?[i].exercises?.length ??
-                                                                            0) -
-                                                                        1
-                                                                ? Radius
-                                                                    .circular(
-                                                                        14.r)
-                                                                : const Radius
-                                                                    .circular(
-                                                                    0),
-                                                          ),
-                                                          image:
-                                                              DecorationImage(
-                                                            image: NetworkImage(state
-                                                                    .model
-                                                                    .data
-                                                                    ?.weeks
-                                                                    ?.first
-                                                                    .days?[i]
-                                                                    .exercises?[
-                                                                        index]
-                                                                    .imageUrl ??
-                                                                ""),
-                                                            fit: BoxFit.fill,
-                                                          ),
-                                                        ),
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Text(
-                                                              state
-                                                                      .model
-                                                                      .data
-                                                                      ?.weeks?[
-                                                                          i]
-                                                                      .days?[i]
-                                                                      .exercises?[
-                                                                          index]
-                                                                      .name ??
-                                                                  "",
-                                                              style: AppFonts
-                                                                  .w500s16
-                                                                  .copyWith(
-                                                                      color: ColorHelper
-                                                                          .alwaysWhiteFFFFFF),
-                                                            ),
-                                                            Text(
-                                                              "${index + 1} упражнение",
-                                                              style: AppFonts.w500s10.copyWith(
-                                                                  color: ColorHelper
-                                                                      .alwaysWhiteFFFFFF
-                                                                      .withOpacity(
-                                                                          0.5)),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    );
-                                                  })
-                                          ],
-                                        ))
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              ]);
+                                                    )
+                                                ],
+                                              ))
+                                            ],
+                                          ),
+                                        ),
+                                      )
+                                    ])
+                                  : Expanded(
+                                      child: WeekScheduleTabbar(
+                                          tabbarViewChildren: List.generate(
+                                              7,
+                                              (index) => Center(
+                                                    child: Text(
+                                                      "Курс пуст",
+                                                      style: AppFonts.w700s12
+                                                          .copyWith(
+                                                              color: ColorHelper
+                                                                  .defaultThemeColor),
+                                                    ),
+                                                  ))),
+                                    );
                             } else if (state is CourceError) {
                               return Center(
                                 child: Text(state.errorText),
                               );
                             }
-                            return const Text('dadrare');
+                            return const SizedBox();
                           },
                         ))
                       : GraphicCard(

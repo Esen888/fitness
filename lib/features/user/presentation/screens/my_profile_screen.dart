@@ -188,6 +188,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                           BlocListener<LogOutBloc, LogOutState>(
                                             listener: (context, state) {
                                               if (state is LogOutSuccess) {
+                                                prefs.clear();
                                                 setState(() {
                                                   Navigator.pushReplacement(
                                                       context,
@@ -202,6 +203,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                                     backgroundColor:
                                                         Colors.red),
                                                 onPressed: () {
+                                                  
                                                   setState(() {
                                                     BlocProvider.of<LogOutBloc>(
                                                             context)

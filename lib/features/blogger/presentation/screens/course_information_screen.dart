@@ -1,5 +1,7 @@
+import 'package:BodyPower/bottom_navigation_bar.dart';
 import 'package:BodyPower/features/blogger/presentation/blocs/buy_course_bloc/buy_course_bloc.dart';
 import 'package:BodyPower/features/blogger/presentation/blocs/get_trial_version_bloc/get_trial_version_bloc.dart';
+import 'package:BodyPower/features/blogger/presentation/provider/default_course_index.dart';
 import 'package:BodyPower/features/blogger/presentation/screens/buy_course_screen.dart';
 import 'package:BodyPower/internal/custom_appbar.dart';
 import 'package:BodyPower/core/utils/app_fonts.dart';
@@ -87,31 +89,31 @@ class CourseInformationScreen extends StatelessWidget {
                           GetTrialVersionState>(
                         listener: (context, state) {
                           if (state is GetTrialVersionSucces) {
+                            context
+                                .read<DefaultCourseIndexProvider>()
+                                .changeIndex(index: courseId);
+                          
+
                             QuickAlert.show(
                               context: context,
                               title: "Успех",
                               type: QuickAlertType.success,
                               text: "Вы успешно получили пробную версию",
-                              barrierDismissible: true,
+                              barrierDismissible: false,
                               confirmBtnText: "Ок",
                               onConfirmBtnTap: () {
-                                Navigator.pop(context);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const BottomNavBar(
+                                              selectedTab: 0,
+                                            )));
                               },
                             );
                           } else if (state is GetTrialVersionError) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text(state.errorText)));
-                            // QuickAlert.show(
-                            //   context: context,
-                            //   title: "Ошибка",
-                            //   type: QuickAlertType.error,
-                            //   text: "Не удалось получить пробный курс",
-                            //   barrierDismissible: true,
-                            //   confirmBtnText: "Ок",
-                            //   onConfirmBtnTap: () {
-                            //     Navigator.pop(context);
-                            //   },
-                            // );
                           }
                         },
                         child: ElevatedButton(
