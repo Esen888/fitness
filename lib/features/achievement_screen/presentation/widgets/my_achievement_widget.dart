@@ -9,7 +9,9 @@ class MyAchievementWidget extends StatelessWidget {
   final TextEditingController controller;
   final Function onTap;
   const MyAchievementWidget({
-    super.key, required this.onTap, required this.controller,
+    super.key,
+    required this.onTap,
+    required this.controller,
   });
 
   @override
@@ -26,23 +28,33 @@ class MyAchievementWidget extends StatelessWidget {
           height: 30.h,
           width: 150,
           child: TextField(
-            
+            keyboardType: TextInputType.number,
             controller: controller,
             onEditingComplete: () {
               onTap();
             },
-            style: AppFonts.w500s12.copyWith(color: ColorHelper.defaultThemeColor),
+            style:
+                AppFonts.w500s12.copyWith(color: ColorHelper.defaultThemeColor),
             textAlign: TextAlign.center,
+            textAlignVertical: TextAlignVertical.center,
             decoration: InputDecoration(
-
+              isDense: true,
               contentPadding: EdgeInsets.only(bottom: 3.h, left: 10.w),
-              prefixText: "Веc:",
-              hintText: "70",
+              // prefixText: "Веc:",
+              prefixIcon: Padding(
+                padding: EdgeInsets.only(top: 5.h, left: 5.w),
+                child: const Text("Веc:"),
+              ),
+              hintText: "",
               suffixIcon: SizedBox(
                 width: 42.w,
                 child: Row(
                   children: [
-                   Text("кг", style: AppFonts.w500s12.copyWith(color: ColorHelper.defaultThemeColor),),
+                    Text(
+                      "кг",
+                      style: AppFonts.w500s12
+                          .copyWith(color: ColorHelper.defaultThemeColor),
+                    ),
                     SizedBox(width: 8.w),
                     InkWell(
                       onTap: () {
@@ -50,11 +62,11 @@ class MyAchievementWidget extends StatelessWidget {
                       },
                       child: Icon(
                         Icons.arrow_forward_ios_outlined,
-                        size: 12.r,
+                        size: 24,
                         color: ColorHelper.weightTextFieldIcon,
                       ),
                     ),
-                    SizedBox(width: 10.w),
+                    // SizedBox(width: 10.w),
                   ],
                 ),
               ),

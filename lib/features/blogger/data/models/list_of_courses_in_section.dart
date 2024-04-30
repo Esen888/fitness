@@ -97,9 +97,11 @@ class Datum {
     int? bloggerId;
     String? image;
     String? name;
-    dynamic createdAt;
+    DateTime? createdAt;
     DateTime? updatedAt;
     int? price;
+    String? description;
+    String? videoLink;
     bool? attached;
     bool? isFree;
     String? imageUrl;
@@ -113,6 +115,8 @@ class Datum {
         this.createdAt,
         this.updatedAt,
         this.price,
+        this.description,
+        this.videoLink,
         this.attached,
         this.isFree,
         this.imageUrl,
@@ -124,9 +128,11 @@ class Datum {
         bloggerId: json["blogger_id"],
         image: json["image"],
         name: json["name"],
-        createdAt: json["created_at"],
+        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
         updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
         price: json["price"],
+        description: json["description"],
+        videoLink: json["video_link"],
         attached: json["attached"],
         isFree: json["is_free"],
         imageUrl: json["image_url"],
@@ -138,9 +144,11 @@ class Datum {
         "blogger_id": bloggerId,
         "image": image,
         "name": name,
-        "created_at": createdAt,
+        "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
         "price": price,
+        "description": description,
+        "video_link": videoLink,
         "attached": attached,
         "is_free": isFree,
         "image_url": imageUrl,
@@ -150,16 +158,14 @@ class Datum {
 
 class Blogger {
     int? id;
-    int? userId;
     int? sectionId;
     String? name;
     String? image;
-    dynamic createdAt;
+    DateTime? createdAt;
     DateTime? updatedAt;
 
     Blogger({
         this.id,
-        this.userId,
         this.sectionId,
         this.name,
         this.image,
@@ -169,21 +175,19 @@ class Blogger {
 
     factory Blogger.fromJson(Map<String, dynamic> json) => Blogger(
         id: json["id"],
-        userId: json["user_id"],
         sectionId: json["section_id"],
         name: json["name"],
         image: json["image"],
-        createdAt: json["created_at"],
+        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
         updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
-        "user_id": userId,
         "section_id": sectionId,
         "name": name,
         "image": image,
-        "created_at": createdAt,
+        "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
     };
 }

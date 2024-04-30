@@ -58,7 +58,7 @@ class _CourseListScreenState extends State<CourseListScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(bottom: 28.h, top: 10.h),
+                      padding: EdgeInsets.only(bottom: 15.h, top: 10.h),
                       child: Text(
                         "Программы тренировок",
                         style: AppFonts.w700s20
@@ -69,9 +69,9 @@ class _CourseListScreenState extends State<CourseListScreen>
                     //   gender: context.watch<ChangeGenderProvider>().gender,
                     // ),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10.h),
+                      padding: EdgeInsets.symmetric(vertical: 3.h),
                       child: SizedBox(
-                        height: 20.h,
+                        height: 40.h,
                         child: BlocBuilder<GetListOfSectionsBloc,
                             GetListOfSectionsState>(
                           builder: (context, state) {
@@ -162,6 +162,14 @@ class _CourseListScreenState extends State<CourseListScreen>
                                                     MaterialPageRoute(
                                                         builder: (context) =>
                                                             CourseInformationScreen(
+                                                              sectionId: state.model.data?.data?[index].blogger?.sectionId??0,
+                                                              videoLink: state
+                                                                      .model
+                                                                      .data
+                                                                      ?.data?[
+                                                                          index]
+                                                                      .videoLink ??
+                                                                  "https://youtu.be/-vxLIDD01uY?si=dpmu39uLT3520XLd",
                                                               courseId: state
                                                                       .model
                                                                       .data
@@ -180,8 +188,8 @@ class _CourseListScreenState extends State<CourseListScreen>
                                                                       .model
                                                                       .data
                                                                       ?.data?[
-                                                                          index]
-                                                                      .name ??
+                                                                          index].description
+                                                                       ??
                                                                   "",
                                                             ))
                                                             );
@@ -212,6 +220,7 @@ class _CourseListScreenState extends State<CourseListScreen>
                               child: CircularProgressIndicator.adaptive(),
                             );
                           } else if (state is GetListOfCoursesInSectionError) {
+                            
                             return Center(
                               child: Text(
                                 "Список пуст",
@@ -230,8 +239,8 @@ class _CourseListScreenState extends State<CourseListScreen>
             }
             return const SizedBox();
           })
-        : Expanded(
-            child:
+        : Column(
+            children:[
                 BlocBuilder<GetCoursesForGuestsBloc, GetCoursesForGuestsState>(
               builder: (context, state) {
                 if (state is GetCoursesForGuestsLoading) {
@@ -239,40 +248,44 @@ class _CourseListScreenState extends State<CourseListScreen>
                     child: CircularProgressIndicator.adaptive(),
                   );
                 } else if (state is GetCoursesForGuestsSuccess) {
-                  return ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      itemCount: state.model.data?.data?.length,
-                      itemBuilder: (context, index) => Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 7.h, horizontal: 16.w),
-                            child: CustomCourceCard(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              CourseInformationScreen(
-                                                courseId: state.model.data
-                                                        ?.data?[index].id ??
-                                                    0,
-                                                titleOfCourse: state.model.data
-                                                        ?.data?[index].name ??
-                                                    "",
-                                                description: state.model.data
-                                                        ?.data?[index].name ??
-                                                    "",
-                                              )));
-                                },
-                                photoOfCource:
-                                    state.model.data?.data?[index].imageUrl ??
-                                        "",
-                                nameOfCource:
-                                    state.model.data?.data?[index].name ??
-                                        "name",
-                                nameOfBloger: state.model.data?.data?[index]
-                                        .blogger?.name ??
-                                    ""),
-                          ));
+                  return Expanded(
+                    child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        itemCount: state.model.data?.data?.length,
+                        itemBuilder: (context, index) => Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 7.h, horizontal: 16.w),
+                              child: CustomCourceCard(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CourseInformationScreen(
+                                                  sectionId: state.model.data?.data?[index].blogger?.sectionId??0,
+                                                  videoLink:  state.model.data?.data?[index].videoLink?? "https://youtu.be/-vxLIDD01uY?si=dpmu39uLT3520XLd",
+                                                  courseId: state.model.data
+                                                          ?.data?[index].id ??
+                                                      0,
+                                                  titleOfCourse: state.model.data
+                                                          ?.data?[index].name ??
+                                                      "",
+                                                  description: state.model.data
+                                                          ?.data?[index].description ??
+                                                      "",
+                                                )));
+                                  },
+                                  photoOfCource:
+                                      state.model.data?.data?[index].imageUrl ??
+                                          "",
+                                  nameOfCource:
+                                      state.model.data?.data?[index].name ??
+                                          "name",
+                                  nameOfBloger: state.model.data?.data?[index]
+                                          .blogger?.name ??
+                                      ""),
+                            )),
+                  );
                 } else if (state is GetCoursesForGuestsError) {
                   return Text(
                     state.errorText,
@@ -284,7 +297,7 @@ class _CourseListScreenState extends State<CourseListScreen>
                 }
                 return const SizedBox();
               },
-            ),
+            ),]
           );
     // Center(
     //     child: GraphicCard(

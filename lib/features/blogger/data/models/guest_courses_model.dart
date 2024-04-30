@@ -101,6 +101,7 @@ class Datum {
     DateTime? updatedAt;
     int? price;
     String? description;
+    String? videoLink;
     String? imageUrl;
     Blogger? blogger;
 
@@ -113,6 +114,7 @@ class Datum {
         this.updatedAt,
         this.price,
         this.description,
+        this.videoLink,
         this.imageUrl,
         this.blogger,
     });
@@ -126,6 +128,7 @@ class Datum {
         updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
         price: json["price"],
         description: json["description"],
+        videoLink: json["video_link"],
         imageUrl: json["image_url"],
         blogger: json["blogger"] == null ? null : Blogger.fromJson(json["blogger"]),
     );
@@ -139,6 +142,7 @@ class Datum {
         "updated_at": updatedAt?.toIso8601String(),
         "price": price,
         "description": description,
+        "video_link": videoLink,
         "image_url": imageUrl,
         "blogger": blogger?.toJson(),
     };

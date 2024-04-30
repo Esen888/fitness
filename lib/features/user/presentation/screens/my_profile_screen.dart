@@ -3,6 +3,7 @@ import 'package:BodyPower/config/dependency_injection/locator.dart';
 import 'package:BodyPower/config/theme/change_theme_provider.dart';
 import 'package:BodyPower/core/utils/app_colors.dart';
 import 'package:BodyPower/core/utils/app_fonts.dart';
+import 'package:BodyPower/features/user/presentation/blocs/delete_account_bloc/delete_account_bloc.dart';
 import 'package:BodyPower/features/user/presentation/blocs/logout_bloc/log_out_bloc.dart';
 import 'package:BodyPower/features/user/presentation/blocs/user_info_bloc/user_info_bloc.dart';
 import 'package:BodyPower/features/user/presentation/widgets/custom_profile_button.dart';
@@ -190,11 +191,11 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                               if (state is LogOutSuccess) {
                                                 prefs.clear();
                                                 setState(() {
-                                                  Navigator.pushReplacement(
+                                                  Navigator.pushAndRemoveUntil(
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) =>
-                                                              const BottomNavBar()));
+                                                              const BottomNavBar()), ModalRoute.withName('/'));
                                                 });
                                               }
                                             },
@@ -203,7 +204,6 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                                     backgroundColor:
                                                         Colors.red),
                                                 onPressed: () {
-                                                  
                                                   setState(() {
                                                     BlocProvider.of<LogOutBloc>(
                                                             context)
@@ -244,7 +244,74 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                 ? CustomProfileSettingsButton(
                     icon: AppIcons.remove,
                     text: "Удалить аккаунт",
-                    onTap: () {},
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                                backgroundColor: isDarkMode
+                                    ? const Color(0xff2F2F2F)
+                                    : const Color(0xffD9D9D9),
+                                surfaceTintColor: Colors.transparent,
+                                title: Text(
+                                  "Вы действительно хотите удалить аккаунт?",
+                                  textAlign: TextAlign.center,
+                                  style: AppFonts.w600s16.copyWith(
+                                      color: ColorHelper.defaultThemeColor),
+                                ),
+                                actions: [
+                                  Center(
+                                    child: Column(
+                                      children: [
+                                        BlocListener<DeleteAccountBloc,
+                                            DeleteAccountState>(
+                                          listener: (context, state) {
+                                            if (state is DeleteAccountSuccess) {
+                                              prefs.clear();
+                                              setState(() {
+                                                Navigator.pushAndRemoveUntil(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const BottomNavBar()), ModalRoute.withName("/"));
+                                              });
+                                            }
+                                          },
+                                          child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  backgroundColor: Colors.red),
+                                              onPressed: () {
+                                                setState(() {
+                                                  BlocProvider.of<
+                                                              DeleteAccountBloc>(
+                                                          context)
+                                                      .add(
+                                                          const DeleteAccountEvent());
+                                                });
+                                              },
+                                              child: Text(
+                                                "Удалить",
+                                                style: AppFonts.w500s10
+                                                    .copyWith(
+                                                        color: ColorHelper
+                                                            .defaultThemeColor),
+                                              )),
+                                        ),
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text(
+                                              "Отмена",
+                                              style: AppFonts.w500s10.copyWith(
+                                                  color: ColorHelper
+                                                      .defaultThemeColor),
+                                            ))
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ));
+                    },
                     isRed: true,
                   )
                 : const SizedBox(),

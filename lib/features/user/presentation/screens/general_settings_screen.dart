@@ -72,10 +72,10 @@ class GenerealSettingsScreen extends StatelessWidget {
                   ? const SizedBox()
                   : ElevatedButton(
                       onPressed: () {
-                        Navigator.pushReplacement(
+                        Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const BottomNavBar()));
+                                builder: (context) => const BottomNavBar()), ModalRoute.withName('/'));
                       },
                       style: ElevatedButton.styleFrom(
                           fixedSize: Size(

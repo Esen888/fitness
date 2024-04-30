@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'core/utils/firebase_options.dart';
 import 'internal/application.dart';
@@ -15,6 +16,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await setupServiceLocator();
+  initializeDateFormatting('ru_RU', null);
 
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

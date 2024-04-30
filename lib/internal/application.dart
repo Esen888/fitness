@@ -32,6 +32,7 @@ import 'package:BodyPower/features/news_page/presentation/blocs/news_list_bloc/n
 import 'package:BodyPower/features/splash_screen/splash_screen.dart';
 import 'package:BodyPower/features/user/data/data_sources/authorization_usecase.dart';
 import 'package:BodyPower/features/user/data/data_sources/courses_usecase.dart';
+import 'package:BodyPower/features/user/data/data_sources/delete_account_ds.dart';
 import 'package:BodyPower/features/user/data/data_sources/get_total_usercources_usecase.dart';
 import 'package:BodyPower/features/user/data/data_sources/get_user_info_usecase.dart';
 import 'package:BodyPower/features/user/data/data_sources/login_usecase.dart';
@@ -39,6 +40,7 @@ import 'package:BodyPower/features/user/data/data_sources/logout_usecase.dart';
 import 'package:BodyPower/features/user/data/data_sources/user_courses_usecase.dart';
 import 'package:BodyPower/features/user/data/repository/authorization_repo_impl.dart';
 import 'package:BodyPower/features/user/data/repository/course_repo_impl.dart';
+import 'package:BodyPower/features/user/data/repository/delete_account_impl.dart';
 import 'package:BodyPower/features/user/data/repository/get_total_usercourses_impl.dart';
 import 'package:BodyPower/features/user/data/repository/get_user_info.dart';
 import 'package:BodyPower/features/user/data/repository/login_repo_impl.dart';
@@ -46,6 +48,7 @@ import 'package:BodyPower/features/user/data/repository/logout_repo_impl.dart';
 import 'package:BodyPower/features/user/data/repository/user_courses_repo_impl.dart';
 import 'package:BodyPower/features/user/presentation/blocs/authorization/authorization_bloc.dart';
 import 'package:BodyPower/features/user/presentation/blocs/cource_bloc/cource_bloc.dart';
+import 'package:BodyPower/features/user/presentation/blocs/delete_account_bloc/delete_account_bloc.dart';
 import 'package:BodyPower/features/user/presentation/blocs/get_user_courses_bloc/get_user_courses_bloc.dart';
 import 'package:BodyPower/features/user/presentation/blocs/login_bloc/login_bloc.dart';
 import 'package:BodyPower/features/user/presentation/blocs/logout_bloc/log_out_bloc.dart';
@@ -224,7 +227,18 @@ class MyApp extends StatelessWidget {
                             .prefs)),
             RepositoryProvider(
                 create: (context) => CourceRepoImpl(
-                    useCase: RepositoryProvider.of<CoursesUseCase>(context)))
+                    useCase: RepositoryProvider.of<CoursesUseCase>(context))),
+            RepositoryProvider(
+                create: (context) => DeleteAccountDataSource(
+                    dio: RepositoryProvider.of<DioSettings>(context).dio,
+                    preferences:
+                        RepositoryProvider.of<SharedPreferencesRepository>(
+                                context)
+                            .prefs)),
+            RepositoryProvider(
+                create: (context) => DeleteAccountRepoImpl(
+                    dataSource: RepositoryProvider.of<DeleteAccountDataSource>(
+                        context)))
           ],
           child: MultiBlocProvider(
             providers: [
@@ -292,7 +306,12 @@ class MyApp extends StatelessWidget {
                           RepositoryProvider.of<BuyCourseRepoImpl>(context))),
               BlocProvider(
                   create: (context) => CourceBloc(
-                      repoImpl: RepositoryProvider.of<CourceRepoImpl>(context)))
+                      repoImpl:
+                          RepositoryProvider.of<CourceRepoImpl>(context))),
+              BlocProvider(
+                  create: (context) => DeleteAccountBloc(
+                      repoImpl: RepositoryProvider.of<DeleteAccountRepoImpl>(
+                          context)))
             ],
             child: MultiProvider(
               providers: [
@@ -310,6 +329,12 @@ class MyApp extends StatelessWidget {
                 minTextAdapt: true,
                 splitScreenMode: true,
                 child: MaterialApp(
+                  builder: (context, child) {
+                    return MediaQuery(
+                        data: MediaQuery.of(context)
+                            .copyWith(textScaler: TextScaler.noScaling),
+                        child: child!);
+                  },
                   debugShowCheckedModeBanner: false,
                   theme: ThemeData(
                     applyElevationOverlayColor: true,

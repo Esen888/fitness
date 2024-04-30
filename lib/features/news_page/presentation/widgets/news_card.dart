@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_fonts.dart';
@@ -11,16 +12,21 @@ class NewsCard extends StatelessWidget {
   final String bloggersAvatar;
   final String newsLabel;
   final String newsPhoto;
+  final DateTime dateWhenCreated;
   const NewsCard({
     super.key,
     required this.bloggersName,
     required this.bloggersAvatar,
     required this.newsLabel,
     required this.newsPhoto,
+    required this.dateWhenCreated,
   });
 
   @override
   Widget build(BuildContext context) {
+    String dateString = dateWhenCreated.toString();
+    DateTime dateTime = DateTime.parse(dateString);
+    final formattedDate = DateFormat('d MMMM HH:mm', "ru_RU").format(dateTime);
     return Container(
       width: 343.w,
       height: 430.h,
@@ -49,7 +55,7 @@ class NewsCard extends StatelessWidget {
                     height: 4.h,
                   ),
                   Text(
-                    "Сегодня в 19:31",
+                    formattedDate,
                     style: AppFonts.w500s12
                         .copyWith(color: ColorHelper.newsTimeColor),
                   )
@@ -64,7 +70,7 @@ class NewsCard extends StatelessWidget {
               bottom: 13.h,
             ),
             child: Text(
-              "120 кг на бицепс, кто примет эстафету? 🔥 ",
+              newsLabel,
               style: AppFonts.w500s12
                   .copyWith(color: ColorHelper.defaultThemeColor),
             ),

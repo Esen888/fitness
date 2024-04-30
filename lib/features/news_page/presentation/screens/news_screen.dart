@@ -1,5 +1,4 @@
 import 'package:BodyPower/config/dependency_injection/locator.dart';
-import 'package:BodyPower/features/achievement_screen/presentation/widgets/graphic_card.dart';
 import 'package:BodyPower/features/news_page/presentation/blocs/news_list_bloc/news_list_bloc.dart';
 import 'package:BodyPower/core/utils/app_fonts.dart';
 import 'package:flutter/material.dart';
@@ -71,10 +70,11 @@ class _NewsScreenState extends State<NewsScreen> {
                             return Padding(
                               padding: EdgeInsets.symmetric(vertical: 8.h),
                               child: NewsCard(
+                                dateWhenCreated: state.model.data?.data?[index].createdAt??DateTime(2024),
                                 bloggersName:
                                     state.model.data?.data?[index].title ?? "",
                                 newsLabel:
-                                    state.model.data?.data?[index].text ?? "",
+                                    state.model.data?.data?[index].title ?? "",
                                 newsPhoto:
                                     state.model.data?.data?[index].imageUrl ??
                                         "",

@@ -22,5 +22,8 @@ abstract class UrlRoutes {
   static const String getTrialVersion = "/free-payment?";
   static const String coursesForGuests = "/courses/all-guest";
   static const String showCoursesInCalendar = "/courses/show";
+  static const String deleteAccount = "/user/delete-user";
+
+ 
 }
 

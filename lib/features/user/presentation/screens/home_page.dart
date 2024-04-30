@@ -111,64 +111,61 @@ class _HomePageScreenState extends State<HomePageScreen>
                                 return Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(bottom: 10.h),
-                                      child: SizedBox(
-                                        height: 20.h,
-                                        child: ListView.builder(
-                                            // padding: EdgeInsets.zero,
-                                            scrollDirection: Axis.horizontal,
-                                            itemCount:
-                                                state.model.data?.length ?? 0,
-                                            itemBuilder: (context, index) {
-                                              courseList = state.model.data;
-                                              coursesIds = courseList?.map((e) => e.id,).toList();
-                                              return Padding(
-                                                padding: EdgeInsets.only(
-                                                  right: 30.w,
+                                    SizedBox(
+                                      height: 40.h,
+                                      child: ListView.builder(
+                                          // padding: EdgeInsets.zero,
+                                          scrollDirection: Axis.horizontal,
+                                          itemCount:
+                                              state.model.data?.length ?? 0,
+                                          itemBuilder: (context, index) {
+                                            courseList = state.model.data;
+                                            coursesIds = courseList?.map((e) => e.id,).toList();
+                                            return Padding(
+                                              padding: EdgeInsets.only(
+                                                right: 25.w,
+                                              ),
+                                              child: InkWell(
+                                                onTap: () {
+                                    
+                                                  setState(() {
+                                                    context
+                                                        .read<
+                                                            DefaultCourseIndexProvider>()
+                                                        .changeIndex(
+                                                            index: index);
+                                                    selectedCourseId = state
+                                                            .model
+                                                            .data?[index]
+                                                            .id ??
+                                                        1;
+                                                    selectedSection = index;
+                                                    context
+                                                        .read<
+                                                            DefaultCourseIndexProvider>()
+                                                        .changeIndex(
+                                                            index:
+                                                                selectedCourseId);
+                                    
+                                                  });
+                                                },
+                                                child: Text(
+                                                  state.model.data?[index]
+                                                          .name ??
+                                                      "",
+                                                    
+                                                  style: AppFonts.w500s16.copyWith(
+                                                    
+                                                      color: selectedSection ==
+                                                              coursesIds?[index]
+                                                          ? const Color(
+                                                              0xff90E072)
+                                                          : const Color(
+                                                              0xff808080)),
                                                 ),
-                                                child: InkWell(
-                                                  onTap: () {
-
-                                                    setState(() {
-                                                      context
-                                                          .read<
-                                                              DefaultCourseIndexProvider>()
-                                                          .changeIndex(
-                                                              index: index);
-                                                      selectedCourseId = state
-                                                              .model
-                                                              .data?[index]
-                                                              .id ??
-                                                          1;
-                                                      selectedSection = index;
-                                                      context
-                                                          .read<
-                                                              DefaultCourseIndexProvider>()
-                                                          .changeIndex(
-                                                              index:
-                                                                  selectedCourseId);
-
-                                                    });
-                                                    // print(courseList?.map((e) => e.id));
-                                                  },
-                                                  child: Text(
-                                                    state.model.data?[index]
-                                                            .name ??
-                                                        "",
-                                                      
-                                                    style: AppFonts.w500s16.copyWith(
-                                                        color: selectedSection ==
-                                                                coursesIds?[index]
-                                                            ? const Color(
-                                                                0xff90E072)
-                                                            : const Color(
-                                                                0xff808080)),
-                                                  ),
-                                                ),
-                                              );
-                                            }),
-                                      ),
+                                              ),
+                                            );
+                                          }),
                                     ),
                                   ],
                                 );

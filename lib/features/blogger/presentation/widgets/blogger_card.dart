@@ -70,7 +70,7 @@ class BloggerCard extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  const CourseInformationScreen(description: "",titleOfCourse: "",courseId: 0,)));
+                                  const CourseInformationScreen(description: "",titleOfCourse: "",courseId: 0, videoLink: '', sectionId: 0,)));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

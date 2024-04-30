@@ -41,7 +41,8 @@ class _AllAvailableCouseScreenState extends State<AllAvailableCouseScreen> {
               children: [
                 Text(
                   "Все курсы",
-                  style: AppFonts.w700s20.copyWith(color: ColorHelper.defaultThemeColor),
+                  style: AppFonts.w700s20
+                      .copyWith(color: ColorHelper.defaultThemeColor),
                 ),
                 Expanded(
                     child: ListView.builder(
@@ -58,6 +59,13 @@ class _AllAvailableCouseScreenState extends State<AllAvailableCouseScreen> {
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             CourseInformationScreen(
+                                              sectionId: model?[index]
+                                                      .blogger
+                                                      ?.sectionId ??
+                                                  0,
+                                              videoLink: model?[index]
+                                                      .videoLink ??
+                                                  "https://youtu.be/-vxLIDD01uY?si=dpmu39uLT3520XLd",
                                               titleOfCourse:
                                                   model?[index].name ?? "",
                                               description:
