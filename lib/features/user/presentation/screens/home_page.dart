@@ -74,6 +74,7 @@ class _HomePageScreenState extends State<HomePageScreen>
     BlocProvider.of<CourceBloc>(context).add(CourceEvent(
         courceId: context.watch<DefaultCourseIndexProvider>().myCoursesId));
     selectedSection = context.watch<DefaultCourseIndexProvider>().myCoursesId;
+
     return BlocListener<UserInfoBloc, UserInfoState>(
       listener: (context, state) {
         if (state is UserInfoError) {
@@ -91,7 +92,9 @@ class _HomePageScreenState extends State<HomePageScreen>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  print(context.read<DefaultCourseIndexProvider>().myCoursesId);
+                },
                 child: Text(
                   "Мои курсы",
                   style: AppFonts.w700s16
@@ -120,14 +123,17 @@ class _HomePageScreenState extends State<HomePageScreen>
                                               state.model.data?.length ?? 0,
                                           itemBuilder: (context, index) {
                                             courseList = state.model.data;
-                                            coursesIds = courseList?.map((e) => e.id,).toList();
+                                            coursesIds = courseList
+                                                ?.map(
+                                                  (e) => e.id,
+                                                )
+                                                .toList();
                                             return Padding(
                                               padding: EdgeInsets.only(
                                                 right: 25.w,
                                               ),
                                               child: InkWell(
                                                 onTap: () {
-                                    
                                                   setState(() {
                                                     context
                                                         .read<
@@ -146,16 +152,13 @@ class _HomePageScreenState extends State<HomePageScreen>
                                                         .changeIndex(
                                                             index:
                                                                 selectedCourseId);
-                                    
                                                   });
                                                 },
                                                 child: Text(
                                                   state.model.data?[index]
                                                           .name ??
                                                       "",
-                                                    
                                                   style: AppFonts.w500s16.copyWith(
-                                                    
                                                       color: selectedSection ==
                                                               coursesIds?[index]
                                                           ? const Color(
@@ -452,8 +455,8 @@ class _HomePageScreenState extends State<HomePageScreen>
                                                   ))),
                                     );
                             } else if (state is CourceError) {
-                              return Center(
-                                child: Text(state.errorText),
+                              return  const Center(
+                                child:  Text("Выберите курс"),
                               );
                             }
                             return const SizedBox();

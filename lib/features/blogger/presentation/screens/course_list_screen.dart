@@ -156,7 +156,7 @@ class _CourseListScreenState extends State<CourseListScreen>
                                               vertical: 7.h),
                                           child: CustomCourceCard(
                                               onTap: () {
-                                                print(state.model.data?.data?[index].id);
+                                                // print(state.model.data?.data?[index].id);
                                                 Navigator.push(
                                                     context,
                                                     MaterialPageRoute(

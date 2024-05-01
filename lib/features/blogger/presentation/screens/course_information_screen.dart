@@ -21,13 +21,15 @@ class CourseInformationScreen extends StatelessWidget {
   final int courseId;
   final String videoLink;
   final int sectionId;
+  final String? whatsappNumber;
   const CourseInformationScreen(
       {super.key,
       required this.titleOfCourse,
       required this.description,
       required this.courseId,
       required this.videoLink,
-      required this.sectionId});
+      required this.sectionId,
+      this.whatsappNumber});
 
   @override
   Widget build(BuildContext context) {
@@ -148,15 +150,15 @@ class CourseInformationScreen extends StatelessWidget {
                       ),
                 willOpenWhatsap
                     ? Padding(
-                      padding:  EdgeInsets.symmetric(vertical: 10.h),
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
+                        padding: EdgeInsets.symmetric(vertical: 10.h),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: ColorHelper.green90E072),
                             onPressed: () async {
                               await launchUrl(Uri.parse(
-                                  "https://wa.me/996771669932?text=Я%20пишу%20с%20мобильного%20приложения%20BodyPower"));
+                                  "https://wa.me/996505808838?text=Я%20пишу%20с%20мобильного%20приложения%20BodyPower"));
                             },
                             child: Text(
                               "Связаться",
@@ -164,8 +166,8 @@ class CourseInformationScreen extends StatelessWidget {
                                   .copyWith(color: ColorHelper.buttonTextColor),
                             ),
                           ),
-                      ),
-                    )
+                        ),
+                      )
                     : BlocListener<BuyCourseBloc, BuyCourseState>(
                         listener: (context, state) {
                           if (state is BuyCourseSuccess) {
