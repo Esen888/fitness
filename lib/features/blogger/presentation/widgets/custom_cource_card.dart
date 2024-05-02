@@ -18,6 +18,7 @@ class CustomCourceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // print("height is: ${MediaQuery.of(context).size.width}");
     return InkWell(
       onTap: () {
         onTap();
@@ -30,7 +31,8 @@ class CustomCourceCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(14.r),
             image: DecorationImage(
                 fit: BoxFit.fill, image: NetworkImage(photoOfCource))),
-        child: Stack(
+        child:
+        Stack(
           children: [
             Container(
               decoration: BoxDecoration(color: Colors.black.withOpacity(0.3)),

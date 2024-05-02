@@ -158,7 +158,7 @@ class CourseInformationScreen extends StatelessWidget {
                                 backgroundColor: ColorHelper.green90E072),
                             onPressed: () async {
                               await launchUrl(Uri.parse(
-                                  "https://wa.me/996505808838?text=Я%20пишу%20с%20мобильного%20приложения%20BodyPower"));
+                                  "https://wa.me/${chooseNumber(id: sectionId)}?text=Я%20пишу%20с%20мобильного%20приложения%20BodyPower"));
                             },
                             child: Text(
                               "Связаться",
@@ -309,5 +309,16 @@ class CourseInformationScreen extends StatelessWidget {
         )),
       ),
     );
+  }
+
+  String chooseNumber({required int id}) {
+    switch (id) {
+      case 3:
+        return "778995523";
+      case 4:
+        return "996505808838";
+      default:
+        return "996505808838";
+    }
   }
 }
