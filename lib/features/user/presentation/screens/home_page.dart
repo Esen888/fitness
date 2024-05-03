@@ -91,15 +91,10 @@ class _HomePageScreenState extends State<HomePageScreen>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              InkWell(
-                onTap: () {
-                  print(context.read<DefaultCourseIndexProvider>().myCoursesId);
-                },
-                child: Text(
-                  "Мои курсы",
-                  style: AppFonts.w700s16
-                      .copyWith(color: ColorHelper.defaultThemeColor),
-                ),
+              Text(
+                "Мои курсы",
+                style: AppFonts.w700s16
+                    .copyWith(color: ColorHelper.defaultThemeColor),
               ),
               isAuthorized
                   ? showTrainingSchedule
