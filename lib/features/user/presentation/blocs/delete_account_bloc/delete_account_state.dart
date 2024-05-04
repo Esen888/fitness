@@ -13,4 +13,7 @@ class DeleteAccountLoading extends DeleteAccountState {}
 
 class DeleteAccountSuccess extends DeleteAccountState {}
 
-class DeleteAccountError extends DeleteAccountState {}
+class DeleteAccountError extends DeleteAccountState {
+  final String errorText;
+  const DeleteAccountError({required this.errorText});
+}

@@ -13,8 +13,8 @@ class DeleteAccountBloc extends Bloc<DeleteAccountEvent, DeleteAccountState> {
       try{
         await repoImpl.deleteAccount();
         emit(DeleteAccountSuccess());
-      }catch(_){
-        emit(DeleteAccountError());
+      }catch(e){
+        emit(DeleteAccountError(errorText: e.toString()));
       }
     });
   }
