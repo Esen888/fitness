@@ -19,13 +19,13 @@ class GraphicCard extends StatelessWidget {
     return Card(
       margin: EdgeInsets.only(
         top: 10.h,
-        bottom: 42.h,
+        bottom: 38.h,
       ),
       color: ColorHelper.cardsBackground,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
       child: SizedBox(
-        width: 343.w,
-        height: 172.h,
+        width: double.infinity,
+        height: 180.h,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

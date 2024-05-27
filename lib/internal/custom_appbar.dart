@@ -67,8 +67,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
         actions: [
           IconButton(
-            icon: const Icon(
+            icon:  Icon(
               Icons.settings,
+              // size: 15.w,
             ),
             onPressed: () {
               Navigator.push(
@@ -97,45 +98,53 @@ class WithoutAuthorizationWidget extends StatelessWidget {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const SignUpScreen()));
       },
-      child: Container(
-        width: 263.w,
-        height: 62.h,
-        decoration: BoxDecoration(
-            color: ColorHelper.green90E072,
-            borderRadius: BorderRadius.circular(14)),
-        child: Row(
-          children: [
-            SizedBox(width: 13.w),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                RichText(
-                  text: TextSpan(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8.w),
+        child: Container(
+          // width: 263.w,
+          height: 66.h,
+          decoration: BoxDecoration(
+              color: ColorHelper.green90E072,
+              borderRadius: BorderRadius.circular(14)),
+          child: Row(
+            children: [
+              SizedBox(width: 11.w),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  RichText(
+                    text: TextSpan(
+                      style: AppFonts.w700s16
+                          .copyWith(color: ColorHelper.unAthenticatedText),
+                      children: [
+                        const TextSpan(text: "Войти"),
+                        TextSpan(text: " или", style: AppFonts.w700s12),
+                      ],
+                    ),
+                  ),
+                  Text(
+                    "Зарегистрироваться",
                     style: AppFonts.w700s16
                         .copyWith(color: ColorHelper.unAthenticatedText),
-                    children: [
-                      const TextSpan(text: "Войти"),
-                      TextSpan(text: " или", style: AppFonts.w700s12),
-                    ],
-                  ),
-                ),
-                Text(
-                  "Зарегистрироваться",
-                  style: AppFonts.w700s16
-                      .copyWith(color: ColorHelper.unAthenticatedText),
-                )
-              ],
-            ),
-            const Spacer(),
-            IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.arrow_forward_ios_outlined,
-                  size: 24.r,
-                  color: ColorHelper.unAthenticatedText,
-                ))
-          ],
+                  )
+                ],
+              ),
+              const Spacer(),
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SignUpScreen()));
+                  },
+                  icon: Icon(
+                    Icons.arrow_forward_ios_outlined,
+                    size: 24.r,
+                    color: ColorHelper.unAthenticatedText,
+                  ))
+            ],
+          ),
         ),
       ),
     );

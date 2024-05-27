@@ -1,3 +1,4 @@
+import 'package:BodyPower/bottom_navigation_bar.dart';
 import 'package:BodyPower/config/dependency_injection/locator.dart';
 import 'package:BodyPower/core/services/tabs.dart';
 import 'package:BodyPower/features/achievement_screen/presentation/widgets/graphic_card.dart';
@@ -232,7 +233,7 @@ class _HomePageScreenState extends State<HomePageScreen>
                               return isWeekNotEmpty
                                   ? Column(children: [
                                       SizedBox(
-                                          height: 20.h,
+                                          height: 30.h,
                                           child: ListView.builder(
                                               scrollDirection: Axis.horizontal,
                                               itemCount: state.model.data?.weeks
@@ -317,21 +318,21 @@ class _HomePageScreenState extends State<HomePageScreen>
                                                           0,
                                                       itemBuilder:
                                                           (context, index) {
-                                                        print(
-                                                            "this is listview length");
-                                                        print(state
-                                                                .model
-                                                                .data
-                                                                ?.weeks?[
-                                                                    selectedWeek]
-                                                                .days?[
-                                                                    _controller
-                                                                        .index]
-                                                                .exercises
-                                                                ?.length ??
-                                                            0);
-                                                        print(
-                                                            "this is selected week: $selectedWeek");
+                                                        // print(
+                                                        //     "this is listview length");
+                                                        // print(state
+                                                        //         .model
+                                                        //         .data
+                                                        //         ?.weeks?[
+                                                        //             selectedWeek]
+                                                        //         .days?[
+                                                        //             _controller
+                                                        //                 .index]
+                                                        //         .exercises
+                                                        //         ?.length ??
+                                                        //     0);
+                                                        // print(
+                                                        //     "this is selected week: $selectedWeek");
                                                         return InkWell(
                                                           onTap: () => Navigator.push(
                                                               context,
@@ -459,7 +460,9 @@ class _HomePageScreenState extends State<HomePageScreen>
                         ))
                       : GraphicCard(
                           buttonTitle: "Сделать расписание",
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const BottomNavBar(selectedTab: 2,)));
+                          },
                           error: "Расписание нет, пока вы не добавите курсы",
                           emodji: '🤨',
                         )

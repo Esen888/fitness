@@ -41,11 +41,11 @@ class CustomAuthTextFiled extends StatelessWidget {
               contentPadding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
               fillColor: const Color(0xffE1E1E1),
               filled: true,
-              prefixIconConstraints: BoxConstraints(
-                  maxHeight: 34.h,
-                  maxWidth: 34.h,
-                  minHeight: 23.h,
-                  minWidth: 23.w),
+              // prefixIconConstraints: BoxConstraints(
+              //     maxHeight: 34.h,
+              //     maxWidth: 34.h,
+              //     minHeight: 23.h,
+              //     minWidth: 23.w),
               prefixIcon: hasPrefixIcon
                   ? Padding(
                       padding: EdgeInsets.only(left: 5.w),

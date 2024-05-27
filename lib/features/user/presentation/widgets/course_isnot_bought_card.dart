@@ -48,7 +48,8 @@ class CourseIsNotBoughtCard extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (context) => const BottomNavBar(
                               selectedTab: 2,
-                            )));
+                            )
+                            ));
               },
               style: ElevatedButton.styleFrom(
                   fixedSize: Size(

@@ -50,6 +50,7 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
                 BlocListener<SaveWeightBloc, SaveWeightState>(
                   listener: (context, state) {
                     if (state is SaveWeightSuccess) {
+                      
                       QuickAlert.show(
                         context: context,
                         title: "Успех",
@@ -160,6 +161,7 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
                                                       showTitles: true,
                                                       getTitlesWidget:
                                                           (value, meta) {
+                                                            // print(value);
                                                         return Text(
                                                           "${(value + 1).toInt().toString()} неделя",
                                                           style: AppFonts.w500s10.copyWith(
@@ -175,7 +177,7 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
                                                   show: true,
                                                   // verticalInterval: 9,
                                                   horizontalInterval: 10,
-                                                  // verticalInterval: 0.1,
+                                                  // verticalInterval: 2,
                                                   drawHorizontalLine: true,
                                                   drawVerticalLine: true,
                                                   getDrawingHorizontalLine:

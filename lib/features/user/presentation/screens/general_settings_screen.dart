@@ -45,6 +45,7 @@ class GenerealSettingsScreen extends StatelessWidget {
                 color: ColorHelper.authenticationIconColor,
               ),
               SizedBox(height: 30.h),
+              
               isAuthorized
                   ? const SizedBox()
                   : ElevatedButton(
@@ -69,28 +70,31 @@ class GenerealSettingsScreen extends StatelessWidget {
                       ),
                     ),
               isAuthorized
-                  ? const SizedBox()
-                  : ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const BottomNavBar()), ModalRoute.withName('/'));
-                      },
-                      style: ElevatedButton.styleFrom(
-                          fixedSize: Size(
-                            152.w,
-                            32.h,
-                          ),
-                          backgroundColor: ColorHelper.buttonColor,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(14))),
-                      child: Text(
-                        "Продолжить без аккаунта",
-                        textAlign: TextAlign.center,
-                        style: AppFonts.w500s10.copyWith(color: ColorHelper.buttonTextColor),
+                  ? const  SizedBox()
+                  : Padding(
+                    padding: EdgeInsets.symmetric(vertical: 5.h),
+                    child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const BottomNavBar()), ModalRoute.withName('/'));
+                        },
+                        style: ElevatedButton.styleFrom(
+                            fixedSize: Size(
+                              152.w,
+                              32.h,
+                            ),
+                            backgroundColor: ColorHelper.buttonColor,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(14))),
+                        child: Text(
+                          "Продолжить без аккаунта",
+                          textAlign: TextAlign.center,
+                          style: AppFonts.w500s10.copyWith(color: ColorHelper.buttonTextColor),
+                        ),
                       ),
-                    ),
+                  ),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushReplacement(

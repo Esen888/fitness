@@ -26,7 +26,7 @@ class MyAchievementWidget extends StatelessWidget {
         const Spacer(),
         SizedBox(
           height: 30.h,
-          width: 150,
+          width: 150.w,
           child: TextField(
             keyboardType: TextInputType.number,
             controller: controller,
@@ -42,12 +42,12 @@ class MyAchievementWidget extends StatelessWidget {
               contentPadding: EdgeInsets.only(bottom: 3.h, left: 10.w),
               // prefixText: "Веc:",
               prefixIcon: Padding(
-                padding: EdgeInsets.only(top: 5.h, left: 5.w),
-                child: const Text("Веc:"),
+                padding: EdgeInsets.only(top: 5.h, left: 5.w,),
+                child:  Text("Веc:", style: AppFonts.w400s11.copyWith(),),
               ),
               hintText: "",
               suffixIcon: SizedBox(
-                width: 42.w,
+                width: 35.w,
                 child: Row(
                   children: [
                     Text(
@@ -55,14 +55,14 @@ class MyAchievementWidget extends StatelessWidget {
                       style: AppFonts.w500s12
                           .copyWith(color: ColorHelper.defaultThemeColor),
                     ),
-                    SizedBox(width: 8.w),
+                    // SizedBox(width: 8.w),
                     InkWell(
                       onTap: () {
                         onTap();
                       },
                       child: Icon(
                         Icons.arrow_forward_ios_outlined,
-                        size: 24,
+                        size: 24.h,
                         color: ColorHelper.weightTextFieldIcon,
                       ),
                     ),

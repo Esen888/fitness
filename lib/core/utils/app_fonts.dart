@@ -6,7 +6,10 @@ class AppFonts {
     fontSize: 20.sp,
     fontWeight: FontWeight.w700,
   );
-
+ static TextStyle w400s9 = TextStyle(
+    fontSize: 9.sp,
+    fontWeight: FontWeight.w400,
+  );
   static TextStyle w700s18 = TextStyle(
     fontSize: 18.sp,
     fontWeight: FontWeight.w700,

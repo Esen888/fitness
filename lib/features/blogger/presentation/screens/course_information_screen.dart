@@ -89,121 +89,127 @@ class CourseInformationScreen extends StatelessWidget {
                 CourseIntroVideoPlayer(
                   videoLink: videoLink,
                 ),
-                willOpenWhatsap
-                    ? const SizedBox()
-                    : Center(
-                        child: Padding(
-                            padding: EdgeInsets.only(
-                              top: 12.h,
-                              bottom: 18.h,
-                            ),
-                            child: BlocListener<GetTrialVersionBloc,
-                                GetTrialVersionState>(
-                              listener: (context, state) {
-                                if (state is GetTrialVersionSucces) {
-                                  context
-                                      .read<DefaultCourseIndexProvider>()
-                                      .changeIndex(index: courseId);
+                // willOpenWhatsap
+                //     ? const SizedBox()
+                //     : Center(
+                //         child: Padding(
+                //             padding: EdgeInsets.only(
+                //               top: 12.h,
+                //               bottom: 18.h,
+                //             ),
+                //             child: BlocListener<GetTrialVersionBloc,
+                //                 GetTrialVersionState>(
+                //               listener: (context, state) {
+                //                 if (state is GetTrialVersionSucces) {
+                //                   context
+                //                       .read<DefaultCourseIndexProvider>()
+                //                       .changeIndex(index: courseId);
 
-                                  QuickAlert.show(
-                                    context: context,
-                                    title: "Успех",
-                                    type: QuickAlertType.success,
-                                    text: "Вы успешно получили пробную версию",
-                                    barrierDismissible: false,
-                                    confirmBtnText: "Ок",
-                                    onConfirmBtnTap: () {
-                                      Navigator.pushAndRemoveUntil(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const BottomNavBar(
-                                                    selectedTab: 0,
-                                                  )),
-                                          ModalRoute.withName("/"));
-                                    },
-                                  );
-                                } else if (state is GetTrialVersionError) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text(state.errorText)));
-                                }
-                              },
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    fixedSize: Size(
-                                  263.w,
-                                  40.h,
-                                )),
-                                onPressed: () {
-                                  // print(courseId);
-                                  BlocProvider.of<GetTrialVersionBloc>(context)
-                                      .add(GetTrialVersionEvent(
-                                          courseId: courseId));
-                                },
-                                child: Text(
-                                  "Получить пробную версию",
-                                  style: AppFonts.w600s12.copyWith(
-                                      color: ColorHelper.buttonTextColor),
-                                ),
-                              ),
-                            )),
-                      ),
-                willOpenWhatsap
-                    ? Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10.h),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: ColorHelper.green90E072),
-                            onPressed: () async {
-                              await launchUrl(Uri.parse(
-                                  "https://wa.me/${chooseNumber(id: sectionId)}?text=Я%20пишу%20с%20мобильного%20приложения%20BodyPower"));
-                            },
-                            child: Text(
-                              "Связаться",
-                              style: AppFonts.w600s12
-                                  .copyWith(color: ColorHelper.buttonTextColor),
-                            ),
-                          ),
-                        ),
-                      )
-                    : BlocListener<BuyCourseBloc, BuyCourseState>(
-                        listener: (context, state) {
-                          if (state is BuyCourseSuccess) {
-                            context.loaderOverlay.hide();
+                //                   QuickAlert.show(
+                //                     context: context,
+                //                     title: "Успех",
+                //                     type: QuickAlertType.success,
+                //                     text: "Вы успешно получили пробную версию",
+                //                     barrierDismissible: false,
+                //                     confirmBtnText: "Ок",
+                //                     onConfirmBtnTap: () {
+                //                       Navigator.pushAndRemoveUntil(
+                //                           context,
+                //                           MaterialPageRoute(
+                //                               builder: (context) =>
+                //                                   const BottomNavBar(
+                //                                     selectedTab: 0,
+                //                                   )),
+                //                           ModalRoute.withName("/"));
+                //                     },
+                //                   );
+                //                 } else if (state is GetTrialVersionError) {
+                //                   ScaffoldMessenger.of(context).showSnackBar(
+                //                       SnackBar(content: Text(state.errorText)));
+                //                 }
+                //               },
+                //               child: ElevatedButton(
+                //                 style: ElevatedButton.styleFrom(
+                //                     fixedSize: Size(
+                //                   263.w,
+                //                   40.h,
+                //                 )),
+                //                 onPressed: () {
+                //                   // print(courseId);
+                //                   BlocProvider.of<GetTrialVersionBloc>(context)
+                //                       .add(GetTrialVersionEvent(
+                //                           courseId: courseId));
+                //                 },
+                //                 child: Text(
+                //                   "Получить пробную версию",
+                //                   style: AppFonts.w600s12.copyWith(
+                //                       color: ColorHelper.buttonTextColor),
+                //                 ),
+                //               ),
+                //             )),
+                //       ),
+                // willOpenWhatsap
+                //     ? Padding(
+                //         padding: EdgeInsets.symmetric(vertical: 10.h),
+                //         child: SizedBox(
+                //           width: double.infinity,
+                //           child: ElevatedButton(
+                //             style: ElevatedButton.styleFrom(
+                //                 backgroundColor: ColorHelper.green90E072),
+                //             onPressed: () async {
+                //               await launchUrl(Uri.parse(
+                //                   "https://wa.me/${chooseNumber(id: sectionId)}?text=Я%20пишу%20с%20мобильного%20приложения%20BodyPower"));
+                //             },
+                //             child: Text(
+                //               "Связаться",
+                //               style: AppFonts.w600s12
+                //                   .copyWith(color: ColorHelper.buttonTextColor),
+                //             ),
+                //           ),
+                //         ),
+                //       )
+                // : BlocListener<BuyCourseBloc, BuyCourseState>(
+                //     listener: (context, state) {
+                //       if (state is BuyCourseSuccess) {
+                //         context.loaderOverlay.hide();
 
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => BuyCourseScreen(
-                                        urlOfWeb:
-                                            state.model.data?.url ?? "")));
-                          } else if (state is BuyCourseError) {
-                            context.loaderOverlay.hide();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(state.errorText)));
-                          } else if (state is BuyCourseLoading) {
-                            context.loaderOverlay.show();
-                          }
-                        },
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: ColorHelper.green90E072),
-                            onPressed: () {
-                              BlocProvider.of<BuyCourseBloc>(context)
-                                  .add(BuyCourseEvent(courseId: courseId));
-                            },
-                            child: Text(
-                              "Получить курс",
-                              style: AppFonts.w600s12
-                                  .copyWith(color: ColorHelper.buttonTextColor),
-                            ),
-                          ),
-                        ),
+                //         Navigator.push(
+                //             context,
+                //             MaterialPageRoute(
+                //                 builder: (context) => BuyCourseScreen(
+                //                     urlOfWeb:
+                //                         state.model.data?.url ?? "")));
+                //       } else if (state is BuyCourseError) {
+                //         context.loaderOverlay.hide();
+                //         ScaffoldMessenger.of(context).showSnackBar(
+                //             SnackBar(content: Text(state.errorText)));
+                //       } else if (state is BuyCourseLoading) {
+                //         context.loaderOverlay.show();
+                //       }
+                //     },
+                //     child:
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: ColorHelper.green90E072),
+                      onPressed: () async {
+                        await launchUrl(Uri.parse(
+                            "https://wa.me/996505808838}?text=Добрый%20день!%20Пишу%20с%20приложения%20BodyPower,%20интересует%20$titleOfCourse"));
+                        // BlocProvider.of<BuyCourseBloc>(context)
+                        //     .add(BuyCourseEvent(courseId: courseId));
+                      },
+                      child: Text(
+                        "Получить курс",
+                        style: AppFonts.w600s12
+                            .copyWith(color: ColorHelper.buttonTextColor),
                       ),
+                    ),
+                  ),
+                ),
 
                 Text(
                   "Курс поможет:",
@@ -211,7 +217,7 @@ class CourseInformationScreen extends StatelessWidget {
                       .copyWith(color: ColorHelper.defaultThemeColor),
                 ),
                 SizedBox(
-                    width: 300,
+                    width: double.infinity,
                     height: MediaQuery.of(context).size.height * 0.4,
                     child: Text(
                       description,

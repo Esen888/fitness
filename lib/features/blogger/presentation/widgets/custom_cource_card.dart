@@ -55,7 +55,9 @@ class CustomCourceCard extends StatelessWidget {
                         style: AppFonts.w500s16.copyWith(color: Colors.white),
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          onTap();
+                        },
                         child: Container(
                           height: 25.h,
                           width: 155.w,

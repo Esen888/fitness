@@ -47,7 +47,7 @@ class NewsCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Дядя Арнольд",
+                    "BodyPower",
                     style: AppFonts.w600s16
                         .copyWith(color: ColorHelper.defaultThemeColor),
                   ),

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>NSPrivacyTracking</key>
+    <false/>
+    <key>PrivacyInfo</key>
+    <dict>
+        <key>DataCategories</key>
+        <array>
+            <dict>
+                <key>CategoryType</key>
+                <string>Health</string>
+                <key>DataItems</key>
+                <array>
+                    <dict>
+                        <key>Name</key>
+                        <string>Weight</string>
+                        <key>Purpose</key>
+                        <dict>
+                            <key>PrimaryPurpose</key>
+                            <string>App Functionality</string>
+                            <key>SecondaryPurpose</key>
+                            <string>Chart Building</string>
+                        </dict>
+                        <key>Description</key>
+                        <string>Weight data is used to generate visual representations of the user's fitness progress. This data is stored on a server managed by the individual developer and is not shared with third parties.</string>
+                    </dict>
+                </array>
+            </dict>
+        </array>
+    </dict>
+</plist>
