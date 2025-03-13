@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "676087762668",
+    "project_id": "bodypower-a0104",
+    "storage_bucket": "bodypower-a0104.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:676087762668:android:7ab09e026cfd4b6f665fc9",
+        "android_client_info": {
+          "package_name": "com.example.fitness"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxWg4NkHkq8mgv2UDF6--v3TK4eLZyfpE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

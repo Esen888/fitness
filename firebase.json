@@ -1,0 +1,51 @@
+{
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "bodypower-a0104",
+          "appId": "1:676087762668:android:7ab09e026cfd4b6f665fc9",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "bodypower-a0104",
+          "appId": "1:676087762668:ios:776a417267a12f17665fc9",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "macos": {
+        "default": {
+          "projectId": "bodypower-a0104",
+          "appId": "1:676087762668:ios:776a417267a12f17665fc9",
+          "uploadDebugSymbols": false,
+          "fileOutput": "macos/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "bodypower-a0104",
+          "configurations": {
+            "web": "1:676087762668:web:f4b160c007b46d77665fc9"
+          }
+        }
+      }
+    }
+  }
+}
