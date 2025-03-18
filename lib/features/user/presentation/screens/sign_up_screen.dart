@@ -1,9 +1,7 @@
 import 'package:fitness/bottom_navigation_bar.dart';
-import 'package:fitness/config/dependency_injection/locator.dart';
 import 'package:fitness/features/user/presentation/blocs/authorization/authorization_bloc.dart';
 import 'package:fitness/features/user/presentation/blocs/login_bloc/login_bloc.dart';
 import 'package:fitness/features/user/presentation/widgets/custom_signup_textfield.dart';
-import 'package:fitness/features/user/presentation/widgets/login_helper_cards.dart';
 import 'package:fitness/core/utils/app_colors.dart';
 import 'package:fitness/core/utils/app_fonts.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../blocs/auth_bloc/authentification_bloc.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});

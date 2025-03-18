@@ -1,4 +1,3 @@
-import 'package:fitness/features/user/presentation/widgets/training_schedule_card.dart';
 import 'package:fitness/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

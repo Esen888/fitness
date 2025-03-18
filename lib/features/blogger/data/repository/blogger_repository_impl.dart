@@ -25,7 +25,7 @@ class BloggerRepositoryImpl implements BloggerRepository {
       return bloggerData;
     } catch (e) {
       log("ERRRORR    Getting all blogers   ${e.toString()}");
-      throw e;
+      rethrow;
     }
   }
 
@@ -45,7 +45,7 @@ class BloggerRepositoryImpl implements BloggerRepository {
       return exerciseGroupCard;
     } catch (e) {
       log("ERROR    Exercisecard  ${e.toString()}");
-      throw e;
+      rethrow;
     }
   }
 }

@@ -7,9 +7,7 @@ import 'package:fitness/features/blogger/presentation/screens/course_information
 import 'package:fitness/features/blogger/presentation/widgets/custom_cource_card.dart';
 import 'package:fitness/features/error_screen/error_screen.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';

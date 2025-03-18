@@ -1,6 +1,5 @@
 import 'package:fitness/bottom_navigation_bar.dart';
 import 'package:fitness/config/dependency_injection/locator.dart';
-import 'package:fitness/config/theme/change_theme_provider.dart';
 import 'package:fitness/core/utils/app_colors.dart';
 import 'package:fitness/core/utils/app_fonts.dart';
 import 'package:fitness/features/user/presentation/blocs/delete_account_bloc/delete_account_bloc.dart';
@@ -8,14 +7,12 @@ import 'package:fitness/features/user/presentation/blocs/logout_bloc/log_out_blo
 import 'package:fitness/features/user/presentation/blocs/user_info_bloc/user_info_bloc.dart';
 import 'package:fitness/features/user/presentation/widgets/custom_profile_button.dart';
 import 'package:fitness/features/user/presentation/widgets/custom_profile_info_widget.dart';
-import 'package:fitness/features/user/presentation/widgets/help_widget.dart';
 import 'package:fitness/internal/custom_appbar.dart';
 import 'package:fitness/resources/resources.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loader_overlay/loader_overlay.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 

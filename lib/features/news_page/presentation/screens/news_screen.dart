@@ -2,7 +2,6 @@ import 'package:fitness/config/dependency_injection/locator.dart';
 import 'package:fitness/features/news_page/presentation/blocs/news_list_bloc/news_list_bloc.dart';
 import 'package:fitness/core/utils/app_fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';

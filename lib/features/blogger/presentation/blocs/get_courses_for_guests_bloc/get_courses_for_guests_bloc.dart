@@ -1,6 +1,5 @@
 import 'package:fitness/features/blogger/data/models/guest_courses_model.dart';
 import 'package:fitness/features/blogger/data/repository/courses_for_guests_impl.dart';
-import 'package:fitness/features/blogger/domain/repositories/courses_for_guests.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';

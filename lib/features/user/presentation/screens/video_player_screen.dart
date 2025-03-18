@@ -3,8 +3,7 @@ import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   final String videoLink;
-  const VideoPlayerScreen({Key? key, required this.videoLink})
-      : super(key: key);
+  const VideoPlayerScreen({super.key, required this.videoLink});
 
   @override
   State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();

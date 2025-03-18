@@ -31,7 +31,7 @@ class WeightsModel {
 class Datum {
     int? id;
     int? userId;
-    String? weight;
+    int? weight;
     DateTime? createdAt;
     DateTime? updatedAt;
 

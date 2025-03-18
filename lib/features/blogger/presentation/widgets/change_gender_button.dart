@@ -9,9 +9,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class ChangeGenderButton extends StatefulWidget {
   final Function onTap;
   const ChangeGenderButton({
-    Key? key,
+    super.key,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   State<ChangeGenderButton> createState() => _ChangeGenderButtonState();

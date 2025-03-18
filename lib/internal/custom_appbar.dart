@@ -1,10 +1,7 @@
 import 'package:fitness/config/dependency_injection/locator.dart';
-import 'package:fitness/features/user/presentation/blocs/login_bloc/login_bloc.dart';
 import 'package:fitness/features/user/presentation/blocs/user_info_bloc/user_info_bloc.dart';
 import 'package:fitness/features/user/presentation/screens/my_profile_screen.dart';
-import 'package:fitness/features/user/presentation/blocs/user_info_bloc/user_info_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,11 +16,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   // final List<Widget> actions;
 
   const CustomAppBar({
-    Key? key,
+    super.key,
     // this.height = kToolbarHeight,
     // required this.title,
     // this.actions = const [],
-  }) : super(key: key);
+  });
 
   @override
   Size get preferredSize => Size.fromHeight(62.h);

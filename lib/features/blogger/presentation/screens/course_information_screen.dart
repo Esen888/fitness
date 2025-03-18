@@ -1,17 +1,9 @@
-import 'package:fitness/bottom_navigation_bar.dart';
-import 'package:fitness/features/blogger/presentation/blocs/buy_course_bloc/buy_course_bloc.dart';
-import 'package:fitness/features/blogger/presentation/blocs/get_trial_version_bloc/get_trial_version_bloc.dart';
-import 'package:fitness/features/blogger/presentation/provider/default_course_index.dart';
-import 'package:fitness/features/blogger/presentation/screens/buy_course_screen.dart';
 import 'package:fitness/features/blogger/presentation/widgets/course_intro_videplayer.dart';
 import 'package:fitness/internal/custom_appbar.dart';
 import 'package:fitness/core/utils/app_fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loader_overlay/loader_overlay.dart';
-import 'package:quickalert/models/quickalert_type.dart';
-import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/utils/app_colors.dart';
 
@@ -198,7 +190,8 @@ class CourseInformationScreen extends StatelessWidget {
                           backgroundColor: ColorHelper.green90E072),
                       onPressed: () async {
                         await launchUrl(Uri.parse(
-                            "https://wa.me/996505808838}?text=Добрый%20день!%20Пишу%20с%20приложения%20BodyPower,%20интересует%20$titleOfCourse"));
+                            "https://t.me/+996700808838?text=Добрый%20день!%20Пишу%20с%20приложения%20BodyPower,%20интересует%20$titleOfCourse"));
+
                         // BlocProvider.of<BuyCourseBloc>(context)
                         //     .add(BuyCourseEvent(courseId: courseId));
                       },

@@ -60,7 +60,7 @@ class TrainingScheduleCard extends StatelessWidget {
                           : const Radius.circular(0),
                     ),
                     image: DecorationImage(
-                      image: AssetImage("${trainingImages[index]}"),
+                      image: AssetImage(trainingImages[index]),
                       fit: BoxFit.fill,
                     ),
                   ),

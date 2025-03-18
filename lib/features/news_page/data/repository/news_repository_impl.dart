@@ -16,7 +16,7 @@ class NewRepositoryImpl implements NewsRepository {
       return newsData;
     } catch (e) {
       log("ERROR  getting allNews   ${e.toString()}");
-      throw e;
+      rethrow;
     }
   }
 
@@ -30,7 +30,7 @@ class NewRepositoryImpl implements NewsRepository {
       return newsData;
     } catch (e) {
       log("Error getNewsDetails  ${e.toString()}");
-      throw e;
+      rethrow;
     }
   }
 }

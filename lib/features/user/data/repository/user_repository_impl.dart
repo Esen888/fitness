@@ -35,7 +35,7 @@ class UserRepositoryImpl implements UserRepository {
       return userData;
     } catch (e) {
       log("ERRRORR    Getting all user   ${e.toString()}");
-      throw e;
+      rethrow;
     }
   }
 }
