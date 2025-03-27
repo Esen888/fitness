@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Future navigate() async {
     // var box = Hive.box("tokenBox");
     // String token = box.get("token", defaultValue: "");
-    await Future.delayed(const Duration(seconds: 4)).then(
+    await Future.delayed(const Duration(seconds: 1)).then(
       (value) => Navigator.pushReplacement(
         context,
         MaterialPageRoute(

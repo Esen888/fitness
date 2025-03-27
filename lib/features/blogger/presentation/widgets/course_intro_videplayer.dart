@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:youtube_player_iframe/youtube_player_iframe.dart';
+import 'package:chewie/chewie.dart';
+import 'package:video_player/video_player.dart';
 
 class CourseIntroVideoPlayer extends StatefulWidget {
   final String videoLink;
@@ -11,8 +12,9 @@ class CourseIntroVideoPlayer extends StatefulWidget {
 }
 
 class _CourseIntroVideoPlayerState extends State<CourseIntroVideoPlayer> {
-  late YoutubePlayerController controller;
-  bool isInitialized = false;
+  late VideoPlayerController _videoController;
+  ChewieController? _chewieController;
+  bool _isInitialized = false;
 
   @override
   void initState() {
@@ -20,50 +22,39 @@ class _CourseIntroVideoPlayerState extends State<CourseIntroVideoPlayer> {
     _initializePlayer();
   }
 
-  void _initializePlayer() {
-    final videoId = YoutubePlayerController.convertUrlToId(widget.videoLink) ?? "wiDjjB0nx_g";
-    
-    controller = YoutubePlayerController.fromVideoId(
-      videoId: videoId,
-      autoPlay: false,
-      params: const YoutubePlayerParams(
-        showControls: true,
-        showFullscreenButton: true,
-          strictRelatedVideos: true, // ✅ Disable suggested videos at the end
-        showVideoAnnotations: false, // ✅ Hide annotations
+  Future<void> _initializePlayer() async {
+    _videoController = VideoPlayerController.networkUrl(Uri.parse(widget.videoLink));
+    await _videoController.initialize();
 
-        enableJavaScript: true,
-        // origin: "https://24body-positive.ru/"
-        // enableKeyboard: true,
-      ),
+    _chewieController = ChewieController(
+      videoPlayerController: _videoController,
+      autoPlay: false,
+      looping: false,
+      aspectRatio: _videoController.value.aspectRatio,
+      errorBuilder: (context, errorMessage) => Center(child: Text(errorMessage)),
     );
 
     setState(() {
-      isInitialized = true; // ✅ Set to true when the controller is ready
+      _isInitialized = true;
     });
   }
 
   @override
   void dispose() {
-    controller.close();
+    _chewieController?.dispose();
+    _videoController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadiusDirectional.circular(15.r),
+      borderRadius: BorderRadius.circular(15.r),
       child: SizedBox(
-        // height: 200.h,
-        child: isInitialized
-            ? YoutubePlayerScaffold(
-                controller: controller,
-                aspectRatio: 16 / 9,
-                builder: (context, player) {
-                  return player;
-                },
-              )
-            : const Center(child: CircularProgressIndicator()), // ✅ Show a loader until initialized
+        height: 200.h,
+        child: _isInitialized && _chewieController != null
+            ? Chewie(controller: _chewieController!)
+            : const Center(child: CircularProgressIndicator()),
       ),
     );
   }
