@@ -9,7 +9,7 @@ class LoginUseCase {
   LoginUseCase({required this.dio, required this.prefs});
 
   Future<LoginModel> login(
-      {required int phoneNumber, required int smsCode}) async {
+      {required String phoneNumber, required int smsCode}) async {
     final Response response = await dio
         .post(UrlRoutes.logIn, data: {"phone": phoneNumber, "code": smsCode});
     final String token = response.data["access_token"];

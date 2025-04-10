@@ -1,7 +1,9 @@
+import 'package:fitness/features/blogger/presentation/blocs/buy_course_bloc/buy_course_bloc.dart';
 import 'package:fitness/features/blogger/presentation/widgets/course_intro_videplayer.dart';
 import 'package:fitness/internal/custom_appbar.dart';
 import 'package:fitness/core/utils/app_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:url_launcher/url_launcher.dart';

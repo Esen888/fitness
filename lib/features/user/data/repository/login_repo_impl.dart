@@ -7,7 +7,7 @@ class LoginRepositoryImpl implements LoginRepository {
   LoginRepositoryImpl({required this.useCase});
   @override
   Future<LoginModel> login(
-      {required int phoneNumber, required int smsCode}) async {
+      {required String phoneNumber, required int smsCode}) async {
     return await useCase.login(phoneNumber: phoneNumber, smsCode: smsCode);
   }
 }

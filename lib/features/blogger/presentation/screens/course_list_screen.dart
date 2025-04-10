@@ -68,76 +68,73 @@ class _CourseListScreenState extends State<CourseListScreen>
                     // ),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 3.h),
-                      child: SizedBox(
-                        height: 40.h,
-                        child: BlocBuilder<GetListOfSectionsBloc,
-                            GetListOfSectionsState>(
-                          builder: (context, state) {
-                            if (state is GetListOfSectionsSuccess) {
-                              return ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: state.model.data.length,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: EdgeInsets.only(
-                                        right: 30.w,
+                      child: BlocBuilder<GetListOfSectionsBloc,
+                          GetListOfSectionsState>(
+                        builder: (context, state) {
+                          if (state is GetListOfSectionsSuccess) {
+                            return Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16.w),
+                              child: Wrap(
+                                spacing: 30.w, // space between items
+                                runSpacing:
+                                  10.h, // vertical spacing between lines
+                                children: List.generate(
+                                    state.model.data.length, (index) {
+                                  final item = state.model.data[index];
+                                  return GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedSection = index;
+                                        defaultCourseId = item.id;
+                                      });
+                                      BlocProvider.of<
+                                                  GetListOfCoursesInSectionBloc>(
+                                              context)
+                                          .add(GetListOfCoursesInSectionEvent(
+                                              id: item.id));
+                                    },
+                                    child: Text(
+                                      item.name,
+                                      style: AppFonts.w500s16.copyWith(
+                                        color: selectedSection == index
+                                            ? (isDarkMode
+                                                ? const Color(0xffE1E1E1)
+                                                : Colors.black)
+                                            : const Color(0xff929292),
                                       ),
-                                      child: InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            selectedSection = index;
-                                            defaultCourseId =  state.model.data[index].id;
-                                          });
-                                          BlocProvider.of<
-                                                      GetListOfCoursesInSectionBloc>(
-                                                  context)
-                                              .add(
-                                                  GetListOfCoursesInSectionEvent(
-                                                      id: 
-                                                      state.model.data[index].id
-                                                      ));
-                                        },
-                                        child: Text(
-                                          state.model.data[index].name,
-                                          style: AppFonts.w500s16.copyWith(
-                                              color: selectedSection == index
-                                                  ? (isDarkMode
-                                                      ? const Color(0xffE1E1E1)
-                                                      : Colors.black)
-                                                  : const Color(0xff929292)),
-                                        ),
-                                      ),
-                                    );
-                                  });
-                            } else if (state
-                                is GetListOfCoursesInSectionLoading) {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            } else if (state is GetListOfSectionsError) {
-                              if (state.exception.type ==
-                                      DioExceptionType.sendTimeout ||
-                                  state.exception.type ==
-                                      DioExceptionType.connectionError ||
-                                  state.exception.type ==
-                                      DioExceptionType.receiveTimeout) {
-                                return const ErrorScreen(
-                                  isInternetError: true,
-                                );
-                              }
+                                    ),
+                                  );
+                                }),
+                              ),
+                            );
+                          } else if (state
+                              is GetListOfCoursesInSectionLoading) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (state is GetListOfSectionsError) {
+                            if (state.exception.type ==
+                                    DioExceptionType.sendTimeout ||
+                                state.exception.type ==
+                                    DioExceptionType.connectionError ||
+                                state.exception.type ==
+                                    DioExceptionType.receiveTimeout) {
                               return const ErrorScreen(
-                                isInternetError: false,
+                                isInternetError: true,
                               );
                             }
-                            return const Text(
-                              "",
-                              style: TextStyle(color: Colors.white),
+                            return const ErrorScreen(
+                              isInternetError: false,
                             );
-                          },
-                        ),
+                          }
+                          return const Text(
+                            "",
+                            style: TextStyle(color: Colors.white),
+                          );
+                        },
                       ),
                     ),
+                    SizedBox(height: 15.h),
                     Expanded(
                       // height: 343.h,
                       child: BlocBuilder<GetListOfCoursesInSectionBloc,
@@ -160,7 +157,14 @@ class _CourseListScreenState extends State<CourseListScreen>
                                                     MaterialPageRoute(
                                                         builder: (context) =>
                                                             CourseInformationScreen(
-                                                              sectionId: state.model.data?.data?[index].blogger?.sectionId??0,
+                                                              sectionId: state
+                                                                      .model
+                                                                      .data
+                                                                      ?.data?[
+                                                                          index]
+                                                                      .blogger
+                                                                      ?.sectionId ??
+                                                                  0,
                                                               videoLink: state
                                                                       .model
                                                                       .data
@@ -186,11 +190,10 @@ class _CourseListScreenState extends State<CourseListScreen>
                                                                       .model
                                                                       .data
                                                                       ?.data?[
-                                                                          index].description
-                                                                       ??
+                                                                          index]
+                                                                      .description ??
                                                                   "",
-                                                            ))
-                                                            );
+                                                            )));
                                               },
                                               photoOfCource: state.model.data
                                                       ?.data?[index].imageUrl ??
@@ -218,7 +221,6 @@ class _CourseListScreenState extends State<CourseListScreen>
                               child: CircularProgressIndicator.adaptive(),
                             );
                           } else if (state is GetListOfCoursesInSectionError) {
-                            
                             return Center(
                               child: Text(
                                 "Список пуст",
@@ -237,9 +239,8 @@ class _CourseListScreenState extends State<CourseListScreen>
             }
             return const SizedBox();
           })
-        : Column(
-            children:[
-                BlocBuilder<GetCoursesForGuestsBloc, GetCoursesForGuestsState>(
+        : Column(children: [
+            BlocBuilder<GetCoursesForGuestsBloc, GetCoursesForGuestsState>(
               builder: (context, state) {
                 if (state is GetCoursesForGuestsLoading) {
                   return const Center(
@@ -260,16 +261,33 @@ class _CourseListScreenState extends State<CourseListScreen>
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 CourseInformationScreen(
-                                                  sectionId: state.model.data?.data?[index].blogger?.sectionId??0,
-                                                  videoLink:  state.model.data?.data?[index].videoLink?? "https://youtu.be/-vxLIDD01uY?si=dpmu39uLT3520XLd",
+                                                  sectionId: state
+                                                          .model
+                                                          .data
+                                                          ?.data?[index]
+                                                          .blogger
+                                                          ?.sectionId ??
+                                                      0,
+                                                  videoLink: state
+                                                          .model
+                                                          .data
+                                                          ?.data?[index]
+                                                          .videoLink ??
+                                                      "https://youtu.be/-vxLIDD01uY?si=dpmu39uLT3520XLd",
                                                   courseId: state.model.data
                                                           ?.data?[index].id ??
                                                       0,
-                                                  titleOfCourse: state.model.data
-                                                          ?.data?[index].name ??
+                                                  titleOfCourse: state
+                                                          .model
+                                                          .data
+                                                          ?.data?[index]
+                                                          .name ??
                                                       "",
-                                                  description: state.model.data
-                                                          ?.data?[index].description ??
+                                                  description: state
+                                                          .model
+                                                          .data
+                                                          ?.data?[index]
+                                                          .description ??
                                                       "",
                                                 )));
                                   },
@@ -295,8 +313,8 @@ class _CourseListScreenState extends State<CourseListScreen>
                 }
                 return const SizedBox();
               },
-            ),]
-          );
+            ),
+          ]);
     // Center(
     //     child: GraphicCard(
 

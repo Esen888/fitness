@@ -9,7 +9,7 @@ class CustomAuthTextFiled extends StatelessWidget {
   final String hintText;
   final bool hasPrefixIcon;
   final int maxLength;
-
+  final String? Function(String?)? validator;
   final TextEditingController controller;
   const CustomAuthTextFiled({
     super.key,
@@ -18,15 +18,15 @@ class CustomAuthTextFiled extends StatelessWidget {
     required this.controller,
     required this.maxLength,
     required this.onChanged,
+    this.validator,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
         height: 50.h,
-        child: TextField(
+        child: TextFormField(
           onChanged: (text) {
-           
             if (text.length >= maxLength) {
               onChanged();
             }
@@ -60,6 +60,12 @@ class CustomAuthTextFiled extends StatelessWidget {
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.r),
                   borderSide: BorderSide.none)),
+          validator: (value) {
+            if (validator != null) {
+              return validator!(value);
+            }
+            return null;
+          },
         ));
   }
 }

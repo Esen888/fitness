@@ -38,7 +38,7 @@ class _HomePageScreenState extends State<HomePageScreen>
   late TabController _controller;
   List<Widget> tabs = TabsService.tabs;
   SharedPreferences preferences = locator<SharedPreferences>();
-
+  final ScrollController _scrollController = ScrollController();
   String date = DateFormat("yyyy, dd - MMMM").format(DateTime.now());
   bool isBought = true;
   bool showTrainingSchedule = false;
@@ -114,6 +114,7 @@ class _HomePageScreenState extends State<HomePageScreen>
                                       height: 40.h,
                                       child: ListView.builder(
                                           // padding: EdgeInsets.zero,
+
                                           scrollDirection: Axis.horizontal,
                                           itemCount:
                                               state.model.data?.length ?? 0,
@@ -298,139 +299,120 @@ class _HomePageScreenState extends State<HomePageScreen>
                                                       .exerciseNameDefaultColor,
                                                   tabs: tabs),
                                               Expanded(
-                                                  child: TabBarView(
-                                                controller: _controller,
-                                                // physics: NeverScrollableScrollPhysics(),
-                                                children: <Widget>[
-                                                  for (int i = 0;
-                                                      i < tabs.length;
-                                                      i++)
-                                                    ListView.builder(
-                                                      itemCount: state
-                                                              .model
-                                                              .data
-                                                              ?.weeks?[
-                                                                  selectedWeek]
-                                                              .days?[_controller
-                                                                  .index]
-                                                              .exercises
-                                                              ?.length ??
-                                                          0,
-                                                      itemBuilder:
-                                                          (context, index) {
-                                                        // print(
-                                                        //     "this is listview length");
-                                                        // print(state
-                                                        //         .model
-                                                        //         .data
-                                                        //         ?.weeks?[
-                                                        //             selectedWeek]
-                                                        //         .days?[
-                                                        //             _controller
-                                                        //                 .index]
-                                                        //         .exercises
-                                                        //         ?.length ??
-                                                        //     0);
-                                                        // print(
-                                                        //     "this is selected week: $selectedWeek");
-                                                        return InkWell(
-                                                          onTap: () => Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder: (context) => VideoPlayerScreen(
-                                                                      videoLink: state
-                                                                              .model
-                                                                              .data
-                                                                              ?.weeks?[selectedWeek]
-                                                                              .days?[_controller.index]
-                                                                              .exercises?[index]
-                                                                              .video ??
-                                                                          ""))),
-                                                          child: Container(
-                                                            height: 170.h,
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    top: 13.h),
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .vertical(
-                                                                top: index == 0
-                                                                    ? Radius
-                                                                        .circular(14
-                                                                            .r)
-                                                                    : const Radius
-                                                                        .circular(
-                                                                        0),
-                                                                bottom: index ==
-                                                                        (state.model.data?.weeks?[selectedWeek].days?[_controller.index].exercises?.length ??
-                                                                                0) -
-                                                                            1
-                                                                    ? Radius
-                                                                        .circular(14
-                                                                            .r)
-                                                                    : const Radius
-                                                                        .circular(
-                                                                        0),
+                                                child: TabBarView(
+                                                  controller: _controller,
+                                                  children: <Widget>[
+                                                    for (int i = 0;
+                                                        i < tabs.length;
+                                                        i++)
+                                                      // Check if exercises is null or empty before building the list
+                                                      state
+                                                                  .model
+                                                                  .data
+                                                                  ?.weeks?[
+                                                                      selectedWeek]
+                                                                  .days?[
+                                                                      _controller
+                                                                          .index]
+                                                                  .exercises
+                                                                  ?.isEmpty ??
+                                                              true
+                                                          ? Center(
+                                                              child: Text(
+                                                                'Нет упражнений на сегодня', // "No exercises for today" in Russian
+                                                                style: AppFonts
+                                                                    .w500s16
+                                                                    .copyWith(
+                                                                        color: ColorHelper
+                                                                            .black38),
                                                               ),
-                                                              image:
-                                                                  DecorationImage(
-                                                                image: NetworkImage(state
-                                                                        .model
-                                                                        .data
-                                                                        ?.weeks?[
-                                                                            selectedWeek]
-                                                                        .days?[_controller
-                                                                            .index]
-                                                                        .exercises?[
-                                                                            index]
-                                                                        .imageUrl ??
-                                                                    ""),
-                                                                fit:
-                                                                    BoxFit.fill,
-                                                              ),
-                                                            ),
-                                                            child: Column(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Text(
-                                                                  state
-                                                                          .model
-                                                                          .data
-                                                                          ?.weeks?[
-                                                                              selectedWeek]
-                                                                          .days?[_controller
-                                                                              .index]
-                                                                          .exercises?[
-                                                                              index]
-                                                                          .name ??
-                                                                      "",
-                                                                  style: AppFonts
-                                                                      .w500s16
-                                                                      .copyWith(
-                                                                          color:
-                                                                              ColorHelper.alwaysWhiteFFFFFF),
-                                                                ),
-                                                                Text(
-                                                                  "${index + 1} упражнение",
-                                                                  style: AppFonts
-                                                                      .w500s10
-                                                                      .copyWith(
-                                                                          color: ColorHelper
-                                                                              .alwaysWhiteFFFFFF
-                                                                              .withOpacity(0.5)),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                    )
-                                                ],
-                                              ))
+                                                            )
+                                                          : ListView.builder(
+                                                              itemCount: state
+                                                                      .model
+                                                                      .data
+                                                                      ?.weeks?[
+                                                                          selectedWeek]
+                                                                      .days?[_controller
+                                                                          .index]
+                                                                      .exercises
+                                                                      ?.length ??
+                                                                  0,
+                                                              itemBuilder:
+                                                                  (context,
+                                                                      index) {
+                                                                return InkWell(
+                                                                  onTap: () =>
+                                                                      Navigator
+                                                                          .push(
+                                                                    context,
+                                                                    MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              VideoPlayerScreen(
+                                                                        videoLink:
+                                                                            state.model.data?.weeks?[selectedWeek].days?[_controller.index].exercises?[index].video ??
+                                                                                "",
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  child:
+                                                                      Container(
+                                                                    height:
+                                                                        170.h,
+                                                                    padding: EdgeInsets.only(
+                                                                        top: 13
+                                                                            .h),
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      borderRadius:
+                                                                          BorderRadius
+                                                                              .vertical(
+                                                                        top: index ==
+                                                                                0
+                                                                            ? Radius.circular(14.r)
+                                                                            : const Radius.circular(0),
+                                                                        bottom: index ==
+                                                                                (state.model.data?.weeks?[selectedWeek].days?[_controller.index].exercises?.length ?? 0) - 1
+                                                                            ? Radius.circular(14.r)
+                                                                            : const Radius.circular(0),
+                                                                      ),
+                                                                      image:
+                                                                          DecorationImage(
+                                                                        image: NetworkImage(state.model.data?.weeks?[selectedWeek].days?[_controller.index].exercises?[index].imageUrl ??
+                                                                            ""),
+                                                                        fit: BoxFit
+                                                                            .fill,
+                                                                      ),
+                                                                    ),
+                                                                    child:
+                                                                        Column(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .center,
+                                                                      children: [
+                                                                        Text(
+                                                                          state.model.data?.weeks?[selectedWeek].days?[_controller.index].exercises?[index].name ??
+                                                                              "",
+                                                                          style: AppFonts
+                                                                              .w500s16
+                                                                              .copyWith(color: ColorHelper.alwaysWhiteFFFFFF),
+                                                                        ),
+                                                                        Text(
+                                                                          "${index + 1} упражнение",
+                                                                          style: AppFonts
+                                                                              .w500s10
+                                                                              .copyWith(color: ColorHelper.alwaysWhiteFFFFFF.withOpacity(0.5)),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              },
+                                                            )
+                                                  ],
+                                                ),
+                                              )
                                             ],
                                           ),
                                         ),
@@ -451,8 +433,8 @@ class _HomePageScreenState extends State<HomePageScreen>
                                                   ))),
                                     );
                             } else if (state is CourceError) {
-                              return  const Center(
-                                child:  Text("Выберите курс"),
+                              return const Center(
+                                child: Text("Выберите курс"),
                               );
                             }
                             return const SizedBox();
@@ -461,7 +443,12 @@ class _HomePageScreenState extends State<HomePageScreen>
                       : GraphicCard(
                           buttonTitle: "Сделать расписание",
                           onTap: () {
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const BottomNavBar(selectedTab: 2,)));
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const BottomNavBar(
+                                          selectedTab: 2,
+                                        )));
                           },
                           error: "Расписание нет, пока вы не добавите курсы",
                           emodji: '🤨',

@@ -13,7 +13,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       emit(LoginLoading());
       try {
         final result = await repositoryImpl.login(
-            phoneNumber: int.parse(event.phoneNumber), smsCode: int.parse(event.codeFromSms));
+            phoneNumber: event.phoneNumber, smsCode: int.parse(event.codeFromSms));
         emit(LoginSuccess(model: result));
       } catch (e) {
         emit(LoginError(errorText: e.toString()));
