@@ -7,10 +7,10 @@ class AuthorizationUseCase {
   AuthorizationUseCase({
     required this.dio,
   });
-  Future<int> authorizationWithPhone({required String phoneNumber}) async {
-    final Response response =
+  Future<void> authorizationWithPhone({required String phoneNumber}) async {
+    // final Response response =
         await dio.post(UrlRoutes.getCode, data: {"phone": phoneNumber});
-    final int smsCode = response.data["data"]["code"];
-    return smsCode;
+    // final int smsCode = response.data["data"]["code"];
+  
   }
 }

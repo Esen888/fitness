@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fitness/bottom_navigation_bar.dart';
 import 'package:fitness/features/user/presentation/blocs/authorization/authorization_bloc.dart';
 import 'package:fitness/features/user/presentation/blocs/login_bloc/login_bloc.dart';
@@ -7,6 +9,7 @@ import 'package:fitness/core/utils/app_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pinput/pinput.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 
@@ -21,6 +24,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
   late TextEditingController phoneNumberController;
   late TextEditingController codeController;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  int secondsRemaining = 60;
+  bool isTimerActive = false;
+  late Timer _timer;
+  void startTimer() {
+    setState(() {
+      isTimerActive = true;
+      secondsRemaining = 60;
+    });
+
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (secondsRemaining > 0) {
+        setState(() {
+          secondsRemaining--;
+        });
+      } else {
+        _timer.cancel();
+        setState(() {
+          isTimerActive = false;
+        });
+      }
+    });
+  }
 
   @override
   void initState() {
@@ -31,6 +56,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   void dispose() {
+    _timer.cancel();
+
     phoneNumberController.dispose();
     codeController.dispose();
     super.dispose();
@@ -130,24 +157,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           height: 40.h,
                           width: double.infinity,
                           child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: ColorHelper.buttonColor),
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  String formattedPhoneNumber =
-                                      phoneNumberController.text;
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: isTimerActive
+                                  ? Colors.grey // или сделай полупрозрачную
+                                  : ColorHelper.buttonColor,
+                            ),
+                            onPressed: isTimerActive
+                                ? null // 🚫 заблокирована
+                                : () {
+                                    if (_formKey.currentState!.validate()) {
+                                      String formattedPhoneNumber =
+                                          phoneNumberController.text;
 
-                                  BlocProvider.of<AuthorizationBloc>(context)
-                                      .add(AuthorizationEvent(
-                                    phoneNumber: formattedPhoneNumber,
-                                  ));
-                                }
-                              },
-                              child: Text(
-                                "Получить код",
-                                style: AppFonts.w500s12.copyWith(
-                                    color: ColorHelper.buttonTextColor),
-                              )),
+                                      BlocProvider.of<AuthorizationBloc>(
+                                              context)
+                                          .add(
+                                        AuthorizationEvent(
+                                            phoneNumber: formattedPhoneNumber),
+                                      );
+                                    }
+                                  },
+                            child: Text(
+                              isTimerActive
+                                  ? "Повторно через $secondsRemaining c"
+                                  : "Получить код",
+                              style: AppFonts.w500s12.copyWith(
+                                color: isTimerActive ? Colors.black : ColorHelper.buttonTextColor,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                       Text(
@@ -157,12 +195,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 5.h),
-                        child: CustomAuthTextFiled(
-                          onChanged: () {},
-                          maxLength: 6,
+                        child: Pinput(
                           controller: codeController,
-                          hintText: "Смс код",
-                          hasPrefixIcon: false,
+                          length: 4,
+                          defaultPinTheme: PinTheme(
+                            width: 48.w,
+                            height: 48.h,
+                            textStyle:
+                                AppFonts.w500s16.copyWith(color: Colors.black),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8.r),
+                              border: Border.all(
+                                  color: ColorHelper.weightTextFieldBorder),
+                            ),
+                          ),
+                          focusedPinTheme: PinTheme(
+                            width: 48.w,
+                            height: 48.h,
+                            textStyle: AppFonts.w600s16,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8.r),
+                              border: Border.all(
+                                  color: ColorHelper.weightTextFieldBorder,
+                                  width: 2),
+                            ),
+                          ),
+                         
                         ),
                       ),
                       Padding(
@@ -191,9 +251,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       BlocListener<AuthorizationBloc, AuthorizationState>(
                         listener: (context, state) {
                           if (state is AuthorizationSuccess) {
+                            startTimer(); // 👈 запускаем таймер
+
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               duration: const Duration(minutes: 5),
-                              content: Text(state.smsCode.toString()),
+                              content: Text("Код отправлен на Ваш номер"),
                             ));
                           }
                           if (state is AuthorizationError) {

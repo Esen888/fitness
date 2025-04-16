@@ -1,3 +1,3 @@
 abstract class SaveWeightRepo{
-  Future<void> saveWeight({required int weight});
+  Future<void> saveWeight({required double weight});
 }

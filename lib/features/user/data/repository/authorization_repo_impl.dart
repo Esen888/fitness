@@ -5,7 +5,7 @@ class AuthorizationRepoImpl implements AuthorizationRepo {
   AuthorizationUseCase useCase;
   AuthorizationRepoImpl({required this.useCase});
   @override
-  Future<int> authorizationWithPhone({required String phoneNumber}) async {
-    return await useCase.authorizationWithPhone(phoneNumber: phoneNumber);
+  Future<void> authorizationWithPhone({required String phoneNumber}) async {
+     await useCase.authorizationWithPhone(phoneNumber: phoneNumber);
   }
 }

@@ -101,8 +101,33 @@ class _HomePageScreenState extends State<HomePageScreen>
                   ? showTrainingSchedule
                       ? Padding(
                           padding: EdgeInsets.symmetric(vertical: 10.h),
-                          child: BlocBuilder<GetTotalUserCoursesBloc,
+                          child: BlocConsumer<GetTotalUserCoursesBloc,
                               GetTotalUserCoursesState>(
+                            listener: (context, state) {
+                              if (state is GetTotalUserCoursesSuccess) {
+                                final courseList = state.model.data;
+                                if (courseList != null &&
+                                    courseList.isNotEmpty) {
+                                  final firstCourseId =
+                                      courseList.first.id ?? 1;
+
+                                  setState(() {
+                                    showTrainingSchedule = true;
+                                    selectedSection = firstCourseId;
+                                    selectedCourseId = firstCourseId;
+                                  });
+
+                                  // Вызываем загрузку первого курса
+                                  context.read<CourceBloc>().add(
+                                      CourceEvent(courceId: firstCourseId));
+
+                                  // Обновляем провайдер
+                                  context
+                                      .read<DefaultCourseIndexProvider>()
+                                      .changeIndex(index: firstCourseId);
+                                }
+                              }
+                            },
                             builder: (context, state) {
                               if (state is GetTotalUserCoursesSuccess) {
                                 List<Datum>? courseList;

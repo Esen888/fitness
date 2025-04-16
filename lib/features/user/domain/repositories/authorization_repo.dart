@@ -1,3 +1,3 @@
 abstract class AuthorizationRepo{
-  Future<int> authorizationWithPhone({required String phoneNumber});
+  Future<void> authorizationWithPhone({required String phoneNumber});
 }

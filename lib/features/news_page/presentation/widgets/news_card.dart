@@ -26,8 +26,7 @@ class NewsCard extends StatelessWidget {
     DateTime dateTime = DateTime.parse(dateString);
     final formattedDate = DateFormat('d MMMM HH:mm', "ru_RU").format(dateTime);
     return Container(
-      width: 343.w,
-      height: 430.h,
+
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(14.r),
           color: ColorHelper.newsCardColor),
@@ -73,17 +72,19 @@ class NewsCard extends StatelessWidget {
                   .copyWith(color: ColorHelper.defaultThemeColor),
             ),
           ),
-          Image.network(
-            newsPhoto,
-            height: 272.h,
-            width: 343.w,
-            fit: BoxFit.cover,
-          ),
           Padding(
-            padding: EdgeInsets.only(
-              left: 16.w,
-              top: 16.h,
+            padding: const EdgeInsets.all(8.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15.r),
+              child: Image.network(
+                newsPhoto,
+                height: 272.h,
+                width: 343.w,
+                fit: BoxFit.cover,
+              ),
             ),
+          ),
+          
             // child: SizedBox(
             //   height: 26.h,
             //   width: 71.w,
@@ -113,7 +114,7 @@ class NewsCard extends StatelessWidget {
             //       )
             //       ),
             // ),
-          )
+          
         ],
       ),
     );

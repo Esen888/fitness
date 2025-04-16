@@ -12,9 +12,12 @@ class AuthorizationBloc extends Bloc<AuthorizationEvent, AuthorizationState> {
     on<AuthorizationEvent>((event, emit) async {
       emit(AuthorizationLoading());
       try {
-        final result = await repoImpl.authorizationWithPhone(
+        // final result = 
+        await repoImpl.authorizationWithPhone(
             phoneNumber: event.phoneNumber);
-        emit(AuthorizationSuccess(smsCode: result));
+        emit(AuthorizationSuccess(
+          // smsCode: result
+          ));
       } on DioException catch (e) {
         if (e.type == DioExceptionType.sendTimeout) {
           emit(const AuthorizationError(

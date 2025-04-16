@@ -6,7 +6,7 @@ class SaveWeightUseCase {
   final Dio dio;
   final SharedPreferences prefs;
   SaveWeightUseCase({required this.dio, required this.prefs});
-  Future<void> saveWeight({required int weight}) async {
+  Future<void> saveWeight({required double weight}) async {
     await dio.post(UrlRoutes.saveWeightData,
         options: Options(headers: {
           "Authorization": "Bearer ${prefs.getString("access_token")}"

@@ -46,48 +46,45 @@ class _BottomNavBarState extends State<BottomNavBar> {
       appBar: const CustomAppBar(),
       backgroundColor: ColorHelper.backgroundColor,
       body: _widgetOptions[_selectedTab!],
-      bottomNavigationBar: Padding(
-        padding:  EdgeInsets.only(bottom: 10.h),
-        child: BottomNavigationBar(
-          elevation: 0,
-          
-          type: BottomNavigationBarType.fixed,
-          currentIndex: _selectedTab!,
-          selectedItemColor: ColorHelper.green90E072,
-          unselectedItemColor: ColorHelper.grey878787,
-          backgroundColor: ColorHelper.black101010,
-          onTap: onSelectTab,
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: ImageIcon(
-                const AssetImage("assets/icons/home_icon.png"),
-                size: 24.r,
-              ),
-              label: "Главная",
+      bottomNavigationBar: BottomNavigationBar(
+        elevation: 0,
+        
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _selectedTab!,
+        selectedItemColor: ColorHelper.green90E072,
+        unselectedItemColor: ColorHelper.grey878787,
+        backgroundColor: ColorHelper.black101010,
+        onTap: onSelectTab,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: ImageIcon(
+              const AssetImage("assets/icons/home_icon.png"),
+              size: 24.r,
             ),
-            BottomNavigationBarItem(
-              icon: ImageIcon(
-                const AssetImage("assets/icons/achievements_icon.png"),
-                size: 24.r,
-              ),
-              label: "Достижения",
+            label: "Главная",
+          ),
+          BottomNavigationBarItem(
+            icon: ImageIcon(
+              const AssetImage("assets/icons/achievements_icon.png"),
+              size: 24.r,
             ),
-            BottomNavigationBarItem(
-              icon: ImageIcon(
-                const AssetImage("assets/icons/courses_icon.png"),
-                size: 24.r,
-              ),
-              label: "Курсы",
+            label: "Достижения",
+          ),
+          BottomNavigationBarItem(
+            icon: ImageIcon(
+              const AssetImage("assets/icons/courses_icon.png"),
+              size: 24.r,
             ),
-            BottomNavigationBarItem(
-              icon: ImageIcon(
-                const AssetImage("assets/icons/news_icon.png"),
-                size: 24.r,
-              ),
-              label: "Новости",
+            label: "Курсы",
+          ),
+          BottomNavigationBarItem(
+            icon: ImageIcon(
+              const AssetImage("assets/icons/news_icon.png"),
+              size: 24.r,
             ),
-          ],
-        ),
+            label: "Новости",
+          ),
+        ],
       ),
     );
   }

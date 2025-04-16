@@ -5,7 +5,7 @@ class SaveWeightRepoImpl implements SaveWeightRepo{
   SaveWeightUseCase  useCase;
   SaveWeightRepoImpl({required this.useCase});
   @override
-  Future<void> saveWeight({required int weight})async {
+  Future<void> saveWeight({required double weight})async {
    await useCase.saveWeight(weight: weight);
   }
   

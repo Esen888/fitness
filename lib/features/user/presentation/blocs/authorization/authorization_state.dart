@@ -12,8 +12,10 @@ class AuthorizationInitial extends AuthorizationState {}
 class AuthorizationLoading extends AuthorizationState {}
 
 class AuthorizationSuccess extends AuthorizationState {
-  final int smsCode;
-  const AuthorizationSuccess({required this.smsCode});
+  // final int smsCode;
+  const AuthorizationSuccess(
+    // {required this.smsCode}
+  );
 }
 
 class AuthorizationError extends AuthorizationState {

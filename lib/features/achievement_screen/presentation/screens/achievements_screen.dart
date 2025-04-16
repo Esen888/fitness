@@ -67,7 +67,7 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
                 controller: _controller,
                 onTap: () {
                   BlocProvider.of<SaveWeightBloc>(context).add(
-                    SaveWeightEvent(weight: int.parse(_controller.text)),
+                    SaveWeightEvent(weight: double.parse(_controller.text)),
                   );
                 },
               ),
